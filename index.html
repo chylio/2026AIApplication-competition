@@ -1193,92 +1193,88 @@
       return true;
     }
 
-    async function submitForm(){
-      for (var i=0;i<sections.length;i++){
-        if (!validateSection(sections[i])) return;
-      }
+async function submitForm(){
+  for (var i=0;i<sections.length;i++){
+    if (!validateSection(sections[i])) return;
+  }
 
-      var payload = {
-        name: document.getElementById('name').value.trim(),
-        employee_id: document.getElementById('employee_id').value.trim(),
-        department: document.getElementById('department').value.trim(),
-        job_title: document.getElementById('job_title').value.trim(),
-        phone: (document.getElementById('phone').value || '').trim(),
-        email: document.getElementById('email').value.trim(),
+  var payload = {
+    name: document.getElementById('name').value.trim(),
+    employee_id: document.getElementById('employee_id').value.trim(),
+    department: document.getElementById('department').value.trim(),
+    job_title: document.getElementById('job_title').value.trim(),
+    phone: (document.getElementById('phone').value || '').trim(),
+    email: document.getElementById('email').value.trim(),
 
-        project_name: document.getElementById('project_name').value.trim(),
-        ai_tool: getRadioValue('ai_tool'),
-        category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
-        category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
-        freq: getRadioValue('freq'),
+    project_name: document.getElementById('project_name').value.trim(),
+    ai_tool: getRadioValue('ai_tool'),
+    category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
+    category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
+    freq: getRadioValue('freq'),
 
-        pain_point: document.getElementById('pain_point').value.trim(),
-        ai_solution: document.getElementById('ai_solution').value.trim(),
-        workflow: (document.getElementById('workflow').value || '').trim(),
-        sop: getRadioValue('sop'),
-        integration: getRadioValue('integration'),
+    pain_point: document.getElementById('pain_point').value.trim(),
+    ai_solution: document.getElementById('ai_solution').value.trim(),
+    workflow: (document.getElementById('workflow').value || '').trim(),
+    sop: getRadioValue('sop'),
+    integration: getRadioValue('integration'),
 
-        quant_benefit: document.getElementById('quant_benefit').value.trim(),
-        qual_benefit: (document.getElementById('qual_benefit').value || '').trim(),
-        beneficiary: getCheckedValues('input[type="checkbox"][name="beneficiary"]').join(','),
-        video_url: document.getElementById('video_url').value.trim(),
+    quant_benefit: document.getElementById('quant_benefit').value.trim(),
+    qual_benefit: (document.getElementById('qual_benefit').value || '').trim(),
+    beneficiary: getCheckedValues('input[type="checkbox"][name="beneficiary"]').join(','),
+    video_url: document.getElementById('video_url').value.trim(),
 
-        patient_data: getRadioValue('patient_data'),
-        data_flow: document.getElementById('data_flow').value.trim(),
-        share_consent: getRadioValue('share_consent'),
-        scalability: getRadioValue('scalability'),
-        adoption: getRadioValue('adoption'),
-        presentation_willing: getRadioValue('presentation_willing'),
+    patient_data: getRadioValue('patient_data'),
+    data_flow: document.getElementById('data_flow').value.trim(),
+    share_consent: getRadioValue('share_consent'),
+    scalability: getRadioValue('scalability'),
+    adoption: getRadioValue('adoption'),
+    presentation_willing: getRadioValue('presentation_willing'),
 
-        agree: document.getElementById('agree').checked ? 'yes' : 'no'
-      };
+    agree: document.getElementById('agree').checked ? 'yes' : 'no'
+  };
 
-      var btn = document.querySelector('.btn-submit');
-      var oldHtml = btn ? btn.innerHTML : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.style.opacity = '0.7';
-        btn.style.cursor = 'not-allowed';
-        btn.innerHTML = '送出中…';
-      }
+  var btn = document.querySelector('.btn-submit');
+  var oldHtml = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    btn.style.cursor = 'not-allowed';
+    btn.innerHTML = '送出中…';
+  }
 
-      try {
-        // form-urlencoded（GitHub Pages 最穩，避免 preflight）
-        var params = new URLSearchParams();
-        Object.keys(payload).forEach(function(k){
-          params.append(k, payload[k]);
-        });
+  // 1) 先立刻顯示成功頁（避免嚇到使用者）
+  showSuccess();
 
-        var res = await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: params.toString()
-        });
+  // 2) 背景送出（不再因讀不到回應而跳失敗）
+  try {
+    var params = new URLSearchParams();
+    Object.keys(payload).forEach(function(k){
+      params.append(k, payload[k]);
+    });
 
-        // UX：先顯示成功（避免「已寫入但讀回應失敗」造成 Failed to fetch）
-        showSuccess();
-
-        // 盡量讀回應做確認；讀不到就忽略
-        try {
-          var text = await res.text();
-          if (text) {
-            var data = JSON.parse(text);
-            if (data && data.ok === false) {
-              alert('送出失敗：' + (data.error || '未知錯誤'));
-            }
-          }
-        } catch (_) {
-          // ignore
-        }
-
-      } catch (e) {
-        alert('送出失敗：' + (e && e.message ? e.message : e));
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.style.opacity = '';
-          btn.style.cursor = '';
-          btn.innerHTML = oldHtml;
+    // 優先用 sendBeacon（最穩，不會因 CORS 讀回應失敗而 throw）
+    if (navigator.sendBeacon) {
+      var blob = new Blob([params.toString()], {
+        type: 'application/x-www-form-urlencoded;charset=UTF-8'
+      });
+      navigator.sendBeacon(GOOGLE_SCRIPT_URL, blob);
+    } else {
+      // fallback：no-cors 也不會要求讀回應
+      fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: params.toString()
+      });
+    }
+  } catch (_) {
+    // ignore：不顯示失敗
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.style.opacity = '';
+      btn.style.cursor = '';
+      btn.innerHTML = oldHtml;
         }
       }
     }
