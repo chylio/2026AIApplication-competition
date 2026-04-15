@@ -35,7 +35,6 @@
       font-family:'Noto Sans TC',sans-serif;
       color:var(--ink);
       overflow-x:hidden;
-      /* landing 背景（同底色延伸至兩側留白） */
       background:
         radial-gradient(1200px 600px at 18% 25%, rgba(91,168,255,.18) 0%, transparent 55%),
         radial-gradient(1200px 700px at 82% 68%, rgba(56,168,78,.12) 0%, transparent 58%),
@@ -45,7 +44,6 @@
     /* ────── LANDING PAGE ────── */
     #landing{min-height:100vh;display:flex;flex-direction:column;position:relative;}
 
-    /* NAV (玻璃) */
     nav{
       position:fixed;top:0;left:0;right:0;z-index:50;
       display:flex;align-items:center;justify-content:space-between;
@@ -322,16 +320,15 @@
     .deadline-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.30);}
 
     /* ─────────────────────────────
-       FORM PAGE 字體放大（16–18px）
-       ※ 首頁保留，僅影響表單頁
+       FORM PAGE（更友善：20px + 題目區塊化/直排）
     ───────────────────────────── */
     #form-page{display:none;min-height:100vh;background:var(--surface);}
     #form-page.visible{display:block;}
 
-    /* 表單全域字級基準 */
+    /* 表單全域字級基準（加大到 20px） */
     #form-page{
-      font-size:16px; /* 全頁基準 16 */
-      line-height:1.65;
+      font-size:20px;
+      line-height:1.75;
     }
 
     .form-topbar{
@@ -342,7 +339,7 @@
     .back-btn{
       display:flex;align-items:center;gap:10px;
       color:rgba(255,255,255,0.80);
-      font-size:16px;cursor:pointer;
+      font-size:18px;cursor:pointer;
       background:none;border:none;
       font-family:'Noto Sans TC',sans-serif;
       letter-spacing:0.04em;
@@ -351,10 +348,10 @@
     .back-btn:hover{color:white;}
     .form-topbar-title{
       font-family:'Noto Serif TC',serif;
-      font-size:18px;color:white;font-weight:600;
+      font-size:20px;color:white;font-weight:600;
       letter-spacing:0.06em;
     }
-    .form-topbar-right{font-size:14px;color:rgba(255,255,255,0.6);}
+    .form-topbar-right{font-size:16px;color:rgba(255,255,255,0.6);}
 
     .form-progress{
       background:white;
@@ -366,10 +363,10 @@
     .prog-tab{
       display:flex;align-items:center;gap:10px;
       padding:18px 22px;
-      font-size:16px;
+      font-size:18px;
       color:#999;
       letter-spacing:0.02em;
-      border-bottom:2px solid transparent;
+      border-bottom:3px solid transparent;
       cursor:default;
       flex-shrink:0;
       transition:color 0.2s,border-color 0.2s;
@@ -378,15 +375,15 @@
     .prog-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
     .prog-tab.done{color:var(--green);}
     .prog-num{
-      width:24px;height:24px;border-radius:50%;
-      border:1.6px solid currentColor;
+      width:28px;height:28px;border-radius:50%;
+      border:2px solid currentColor;
       display:flex;align-items:center;justify-content:center;
-      font-size:12px;font-weight:700;
+      font-size:13px;font-weight:800;
     }
     .prog-tab.active .prog-num{background:var(--blue);border-color:var(--blue);color:white;}
     .prog-tab.done .prog-num{background:var(--green);border-color:var(--green);color:white;}
 
-    .form-body{max-width:860px;margin:0 auto;padding:44px 24px 110px;}
+    .form-body{max-width:980px;margin:0 auto;padding:44px 24px 110px;}
 
     .form-section{display:none;}
     .form-section.visible{display:block;animation:fadeUp 0.3s ease;}
@@ -400,35 +397,48 @@
     }
     .sec-letter{
       font-family:'Noto Serif TC',serif;
-      font-size:44px;font-weight:300;
-      color:var(--blue);line-height:1;width:50px;flex-shrink:0;
+      font-size:48px;font-weight:300;
+      color:var(--blue);line-height:1;width:56px;flex-shrink:0;
     }
     .sec-label{
       font-family:'Noto Serif TC',serif;
-      font-size:26px;font-weight:700;color:var(--ink);
+      font-size:30px;font-weight:700;color:var(--ink);
     }
-    .sec-note{font-size:16px;color:#667;margin-top:4px;}
+    .sec-note{font-size:18px;color:#667;margin-top:4px;}
 
-    .fg{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;margin-bottom:18px;}
+    /* 題目由上到下排：全部改成單欄 */
+    .fg{display:grid;grid-template-columns:1fr;gap:0;margin-bottom:0;}
     .fg.full{grid-template-columns:1fr;}
-    .fg.three{grid-template-columns:1fr 1fr 1fr;}
-    .f{display:flex;flex-direction:column;gap:8px;}
-    .f.s2{grid-column:span 2;}
-    .f.s3{grid-column:span 3;}
+    .fg.three{grid-template-columns:1fr;}
+
+    /* 題目區塊化：明顯區隔 */
+    .f{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:18px 18px 20px;
+      margin:0 0 16px 0;
+      background:#fff;
+      border:1px solid #d6e2f0;
+      border-radius:16px;
+      box-shadow:0 10px 26px rgba(13,27,42,0.06);
+    }
+    .f.s2,.f.s3{grid-column:auto;}
 
     label{
-      font-size:16px;
-      font-weight:700;
-      color:#334;
+      font-size:20px;
+      font-weight:800;
+      color:#223;
       letter-spacing:0.01em;
     }
-    .req{color:var(--blue);margin-left:4px;font-weight:800;}
+    .req{color:var(--blue);margin-left:6px;font-weight:900;}
 
     input[type=text],input[type=email],input[type=tel],input[type=url],textarea,select{
       width:100%;
-      border:1px solid #cfdceb;border-radius:10px;
-      padding:13px 14px;
-      font-size:16px;
+      border:1px solid #cfdceb;
+      border-radius:14px;
+      padding:16px 16px;
+      font-size:20px;
       font-family:'Noto Sans TC',sans-serif;
       color:var(--ink);
       background:white;
@@ -437,34 +447,41 @@
     }
     input::placeholder, textarea::placeholder{
       color:#93a1b2;
-      font-size:16px;
+      font-size:19px;
     }
 
     input:focus,textarea:focus,select:focus{
-      outline:none;border-color:var(--blue-light);
-      box-shadow:0 0 0 4px rgba(45,107,196,0.14);
+      outline:none;
+      border-color:var(--blue-light);
+      box-shadow:0 0 0 5px rgba(45,107,196,0.14);
     }
-    textarea{resize:vertical;min-height:120px;line-height:1.8;font-size:16px;}
+    textarea{resize:vertical;min-height:150px;line-height:1.8;font-size:20px;}
 
     select{
       background-repeat:no-repeat;
-      background-position:right 12px center;
-      padding-right:42px;
+      background-position:right 14px center;
+      padding-right:52px;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
 
-    .hint{font-size:15px;color:#8b97a6;margin-top:6px;}
-    .charcount{font-size:14px;color:#8b97a6;text-align:right;margin-top:6px;}
+    .hint{font-size:18px;color:#7d8a9a;margin-top:6px;}
+    .charcount{font-size:17px;color:#7d8a9a;text-align:right;margin-top:6px;}
     .charcount.over{color:#c0392b;}
 
-    .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;}
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:2px;
+    }
     .pill{
-      display:flex;align-items:center;gap:9px;
-      padding:10px 16px;
-      border:1px solid #cfdceb;border-radius:999px;
+      display:flex;align-items:center;gap:10px;
+      padding:12px 18px;
+      border:1px solid #cfdceb;
+      border-radius:999px;
       cursor:pointer;
-      font-size:16px;
-      color:#445;
+      font-size:19px;
+      color:#334;
       transition:all 0.15s;
       background:white;
       user-select:none;
@@ -475,65 +492,73 @@
       background:#eaf1fb;
       color:var(--blue);
     }
-    .pill input{width:16px;height:16px;accent-color:var(--blue);margin:0;padding:0;border:none;box-shadow:none;flex-shrink:0;}
+    .pill input{width:18px;height:18px;accent-color:var(--blue);margin:0;padding:0;border:none;box-shadow:none;flex-shrink:0;}
 
     .notice{
-      background:#fffbf0;border:1px solid #ead888;border-left:5px solid var(--gold);
-      border-radius:12px;
-      padding:16px 18px;margin-bottom:14px;
-      font-size:16px;
+      background:#fffbf0;border:1px solid #ead888;border-left:6px solid var(--gold);
+      border-radius:16px;
+      padding:18px 18px;
+      margin-bottom:12px;
+      font-size:19px;
       color:#5a4800;
-      line-height:1.85;
+      line-height:1.9;
     }
 
     .btn-row{
-      display:flex;align-items:center;justify-content:space-between;
-      margin-top:44px;padding-top:28px;border-top:1px solid #e0e8f0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-top:26px;
+      padding-top:18px;
+      border-top:1px solid #e0e8f0;
       gap:12px;
     }
     .btn-secondary{
-      background:none;border:1.5px solid #cfdceb;border-radius:12px;
-      padding:13px 18px;
-      font-size:16px;
-      cursor:pointer;color:#445;
+      background:white;
+      border:2px solid #cfdceb;
+      border-radius:14px;
+      padding:14px 18px;
+      font-size:18px;
+      cursor:pointer;
+      color:#334;
       font-family:'Noto Sans TC',sans-serif;
       letter-spacing:0.04em;
       transition:all 0.2s;
-      font-weight:700;
+      font-weight:800;
     }
     .btn-secondary:hover{border-color:#8898aa;color:var(--ink);}
     .btn-primary{
       background:linear-gradient(135deg,var(--blue-light),var(--blue));
-      color:white;border:none;border-radius:12px;
-      padding:13px 22px;
-      font-size:16px;
-      font-weight:800;
+      color:white;border:none;border-radius:14px;
+      padding:14px 24px;
+      font-size:18px;
+      font-weight:900;
       cursor:pointer;
       font-family:'Noto Sans TC',sans-serif;
       letter-spacing:0.04em;
-      display:flex;align-items:center;gap:8px;
+      display:flex;align-items:center;gap:10px;
       transition:all 0.2s;
-      box-shadow:0 10px 24px rgba(26,75,140,0.22);
+      box-shadow:0 12px 28px rgba(26,75,140,0.22);
     }
-    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(26,75,140,0.26);}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(26,75,140,0.26);}
     .btn-submit{background:linear-gradient(135deg,var(--green-light),var(--green));}
-    .btn-submit:hover{box-shadow:0 14px 28px rgba(42,122,58,0.26);}
+    .btn-submit:hover{box-shadow:0 16px 32px rgba(42,122,58,0.26);}
 
     .decl{
-      background:#f4f8ff;border:1px solid #cfdceb;border-radius:14px;
+      background:#f4f8ff;border:1px solid #cfdceb;border-radius:16px;
       padding:22px;margin-bottom:22px;
-      font-size:16px;
+      font-size:19px;
     }
-    .decl-title{font-weight:900;font-size:18px;margin-bottom:12px;color:var(--ink);}
-    .decl ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
-    .decl ul li{font-size:16px;color:#445;padding-left:16px;position:relative;line-height:1.85;}
-    .decl ul li::before{content:'·';position:absolute;left:4px;color:var(--blue);font-weight:900;}
+    .decl-title{font-weight:900;font-size:20px;margin-bottom:12px;color:var(--ink);}
+    .decl ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:18px;}
+    .decl ul li{font-size:19px;color:#334;padding-left:18px;position:relative;line-height:1.85;}
+    .decl ul li::before{content:'·';position:absolute;left:6px;color:var(--blue);font-weight:900;}
     .agree-row{
-      display:flex;align-items:flex-start;gap:10px;
+      display:flex;align-items:flex-start;gap:12px;
       padding-top:14px;border-top:1px solid #cfdceb;
     }
-    .agree-row input{width:18px;height:18px;accent-color:var(--blue);flex-shrink:0;margin-top:4px;}
-    .agree-row label{font-size:16px;color:#334;font-weight:600;letter-spacing:0;}
+    .agree-row input{width:20px;height:20px;accent-color:var(--blue);flex-shrink:0;margin-top:5px;}
+    .agree-row label{font-size:19px;color:#223;font-weight:700;letter-spacing:0;}
 
     .success-wrap{
       display:none;
@@ -542,13 +567,13 @@
     }
     .success-wrap.visible{display:flex;}
     .success-icon{
-      width:78px;height:78px;
+      width:86px;height:86px;
       background:#e8f7ec;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
       margin-bottom:22px;
     }
-    .success-title{font-family:'Noto Serif TC',serif;font-size:30px;font-weight:700;margin-bottom:12px;}
-    .success-sub{font-size:18px;color:#556;line-height:1.9;max-width:560px;}
+    .success-title{font-family:'Noto Serif TC',serif;font-size:34px;font-weight:700;margin-bottom:12px;}
+    .success-sub{font-size:20px;color:#556;line-height:1.9;max-width:660px;}
 
     /* responsive */
     @media(max-width: 1100px){
@@ -561,14 +586,15 @@
       .nav-logo{font-size:13px;}
       .nav-logo span{display:none;}
       .deadline-banner{width:calc(100% - 40px); gap:18px; padding:12px 16px;}
-      .stats-row{gap:20px;}
-      .hero-desc{font-size:16px;}
-      .stat-num{font-size:24px;}
 
       .form-topbar,.form-progress{padding-left:20px;padding-right:20px;}
       .form-body{padding:34px 16px 90px;}
-      .fg,.fg.three{grid-template-columns:1fr;}
-      .f.s2,.f.s3{grid-column:span 1;}
+      #form-page{font-size:18px;}
+      label{font-size:18px;}
+      input[type=text],input[type=email],input[type=tel],input[type=url],textarea,select{font-size:18px;}
+      .pill{font-size:18px;}
+      .notice{font-size:18px;}
+      .decl ul li{font-size:18px;}
     }
   </style>
 </head>
@@ -911,7 +937,7 @@
           </div>
         </div>
 
-        <div style="margin-top:12px;">
+        <div class="f">
           <label style="display:block;margin-bottom:8px;">說明影片連結 <span class="req">*</span></label>
           <div class="notice">
             <strong>📹 影片上傳說明</strong><br>
@@ -919,10 +945,8 @@
             請先將影片（5 分鐘以內）上傳至 <strong>OneDrive 或 Google Drive</strong>，再將分享連結貼於下方。<br>
             影片應清楚呈現：① 工作情境　② AI 操作流程　③ 實際效益。
           </div>
-          <div class="f" style="margin-top:8px;">
-            <input type="url" id="video_url" placeholder="https://..." required>
-            <div class="hint">範例：https://drive.google.com/... 或 https://youtu.be/...</div>
-          </div>
+          <input type="url" id="video_url" placeholder="https://..." required>
+          <div class="hint">範例：https://drive.google.com/... 或 https://youtu.be/...</div>
         </div>
 
         <div class="btn-row">
@@ -1032,13 +1056,16 @@
         <p class="success-sub">
           感謝您參與 AI 應用競賽。<br>
           我們已收到您的報名資料，評審委員將於審閱後與您聯繫。<br><br>
-          <span style="font-size:16px;color:#889;">如有任何問題，請聯繫深耕辦公室｜吳曉琪53710。</span>
+          <span style="font-size:18px;color:#889;">如有任何問題，請聯繫深耕辦公室｜吳曉琪53710。</span>
         </p>
       </div>
     </div>
   </div>
 
   <script>
+    // Google Apps Script Web App（方案2：可讀回應）
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzaR6xNW4t2IrkQFljmmYbz7JVJmoMRA9ICOsayIeAUjG2H49lhkvGbqA_AkvK-AliGBw/exec";
+
     // 保留 2025.jpg
     (function(){
       var img = document.getElementById('hero-img');
@@ -1071,7 +1098,6 @@
     }
 
     function goTo(sec){
-      // basic required check for current section
       if (!validateSection(currentSection)) return;
 
       document.getElementById('sec-'+currentSection).classList.remove('visible');
@@ -1096,6 +1122,17 @@
       box.classList.toggle('over', cnt > max);
     }
 
+    function getCheckedValues(selector) {
+      return Array.from(document.querySelectorAll(selector))
+        .filter(function(x){ return x.checked; })
+        .map(function(x){ return x.value; });
+    }
+
+    function getRadioValue(name) {
+      var el = document.querySelector('input[type="radio"][name="' + name + '"]:checked');
+      return el ? el.value : '';
+    }
+
     // B: 類別「其他」顯示輸入框
     (function(){
       var other = document.getElementById('cat_other');
@@ -1113,12 +1150,10 @@
       var root = document.getElementById('sec-'+sec);
       if (!root) return true;
 
-      // collect required inputs/textarea/select
       var required = root.querySelectorAll('[required]');
       for (var i=0;i<required.length;i++){
         var el = required[i];
 
-        // radio group
         if (el.type === 'radio'){
           var name = el.name;
           if (!name) continue;
@@ -1130,7 +1165,6 @@
           continue;
         }
 
-        // checkbox group: allow at least one checked if there are multiple required checkboxes with same name
         if (el.type === 'checkbox' && el.name){
           var group = root.querySelectorAll('input[type="checkbox"][name="'+el.name+'"]');
           var anyChecked = false;
@@ -1151,7 +1185,6 @@
         }
       }
 
-      // extra: B 的「其他類別」如果勾選必填
       if (sec === 'B'){
         var other = document.getElementById('cat_other');
         var otherText = document.getElementById('category_other');
@@ -1165,78 +1198,86 @@
       return true;
     }
 
-    // ── 貼上你的 Power Automate HTTP Trigger URL ──
-    var POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE';
-
-    function v(id){ return (document.getElementById(id)||{}).value||''; }
-    function radio(name){ var r=document.querySelector('input[name="'+name+'"]:checked'); return r?r.value:''; }
-    function checkboxes(name){ return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(function(c){return c.value;}).join('、'); }
-
-    function submitForm(){
-      // validate all sections
+    async function submitForm(){
       for (var i=0;i<sections.length;i++){
         if (!validateSection(sections[i])) return;
       }
 
-      // collect form data
-      var data = {
-        姓名:             v('name'),
-        人事號:           v('employee_id'),
-        所屬單位:         v('department'),
-        職稱:             v('job_title'),
-        公務機分機:       v('phone'),
-        電子郵件:         v('email'),
-        照護流程方案名稱: v('project_name'),
-        AI工具類型:       radio('ai_tool'),
-        應用類別:         checkboxes('category'),
-        應用類別其他:     v('category_other'),
-        使用頻率:         radio('freq'),
-        工作痛點:         v('pain_point'),
-        AI解決方式:       v('ai_solution'),
-        工作流程設計:     v('workflow'),
-        是否有SOP:        radio('sop'),
-        系統整合:         radio('integration'),
-        量化效益:         v('quant_benefit'),
-        質化效益:         v('qual_benefit'),
-        受益對象:         checkboxes('beneficiary'),
-        病人資料:         radio('patient_data'),
-        資料流說明:       v('data_flow'),
-        分享同意:         radio('share_consent'),
-        可推廣性:         radio('scalability'),
-        他人採用:         radio('adoption'),
-        願意簡報:         radio('presentation_willing'),
-        影片連結:         v('video_url'),
-        報名時間:         new Date().toLocaleString('zh-TW')
+      var payload = {
+        name: document.getElementById('name').value.trim(),
+        employee_id: document.getElementById('employee_id').value.trim(),
+        department: document.getElementById('department').value.trim(),
+        job_title: document.getElementById('job_title').value.trim(),
+        phone: (document.getElementById('phone').value || '').trim(),
+        email: document.getElementById('email').value.trim(),
+
+        project_name: document.getElementById('project_name').value.trim(),
+        ai_tool: getRadioValue('ai_tool'),
+        category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
+        category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
+        freq: getRadioValue('freq'),
+
+        pain_point: document.getElementById('pain_point').value.trim(),
+        ai_solution: document.getElementById('ai_solution').value.trim(),
+        workflow: (document.getElementById('workflow').value || '').trim(),
+        sop: getRadioValue('sop'),
+        integration: getRadioValue('integration'),
+
+        quant_benefit: document.getElementById('quant_benefit').value.trim(),
+        qual_benefit: (document.getElementById('qual_benefit').value || '').trim(),
+        beneficiary: getCheckedValues('input[type="checkbox"][name="beneficiary"]').join(','),
+        video_url: document.getElementById('video_url').value.trim(),
+
+        patient_data: getRadioValue('patient_data'),
+        data_flow: document.getElementById('data_flow').value.trim(),
+        share_consent: getRadioValue('share_consent'),
+        scalability: getRadioValue('scalability'),
+        adoption: getRadioValue('adoption'),
+        presentation_willing: getRadioValue('presentation_willing'),
+
+        agree: document.getElementById('agree').checked ? 'yes' : 'no'
       };
 
-      // show loading
       var btn = document.querySelector('.btn-submit');
-      var origText = btn.innerHTML;
-      btn.innerHTML = '送出中…';
-      btn.disabled = true;
-
-      // demo mode
-      if (POWER_AUTOMATE_URL === 'https://default24de0681c8f746e88da71f5b393d83.4d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f2f7b475f1074d689e9cc6292b2e3986/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=kTZkFMjoT4Q9srcIIjwu77IRiep42xQC8mE8CYkO1AI'){
-        setTimeout(function(){
-          showSuccess();
-        }, 800);
-        return;
+      var oldHtml = btn ? btn.innerHTML : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        btn.style.cursor = 'not-allowed';
+        btn.innerHTML = '送出中…';
       }
 
-      fetch(POWER_AUTOMATE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(function(r){
-        if (!r.ok) throw new Error('HTTP ' + r.status);
+      try {
+        var res = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        var text = await res.text();
+        var data;
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          throw new Error('後端回傳非 JSON：' + text);
+        }
+
+        if (!data || data.ok !== true) {
+          throw new Error((data && data.error) ? data.error : '寫入失敗（未知錯誤）');
+        }
+
         showSuccess();
-      })
-      .catch(function(err){
-        alert('送出失敗，請稍後再試或聯絡主辦單位。\n錯誤：' + err.message);
-        btn.innerHTML = origText;
-        btn.disabled = false;
-      });
+
+      } catch (e) {
+        alert('送出失敗：' + (e && e.message ? e.message : e));
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.style.opacity = '';
+          btn.style.cursor = '';
+          btn.innerHTML = oldHtml;
+        }
+      }
     }
 
     function showSuccess(){
