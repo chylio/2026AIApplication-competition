@@ -1165,24 +1165,89 @@
       return true;
     }
 
+    // ── 貼上你的 Power Automate HTTP Trigger URL ──
+    var POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE';
+
+    function v(id){ return (document.getElementById(id)||{}).value||''; }
+    function radio(name){ var r=document.querySelector('input[name="'+name+'"]:checked'); return r?r.value:''; }
+    function checkboxes(name){ return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(function(c){return c.value;}).join('、'); }
+
     function submitForm(){
-      // validate all sections quickly
+      // validate all sections
       for (var i=0;i<sections.length;i++){
         if (!validateSection(sections[i])) return;
       }
 
-      // success view
+      // collect form data
+      var data = {
+        姓名:             v('name'),
+        人事號:           v('employee_id'),
+        所屬單位:         v('department'),
+        職稱:             v('job_title'),
+        公務機分機:       v('phone'),
+        電子郵件:         v('email'),
+        照護流程方案名稱: v('project_name'),
+        AI工具類型:       radio('ai_tool'),
+        應用類別:         checkboxes('category'),
+        應用類別其他:     v('category_other'),
+        使用頻率:         radio('freq'),
+        工作痛點:         v('pain_point'),
+        AI解決方式:       v('ai_solution'),
+        工作流程設計:     v('workflow'),
+        是否有SOP:        radio('sop'),
+        系統整合:         radio('integration'),
+        量化效益:         v('quant_benefit'),
+        質化效益:         v('qual_benefit'),
+        受益對象:         checkboxes('beneficiary'),
+        病人資料:         radio('patient_data'),
+        資料流說明:       v('data_flow'),
+        分享同意:         radio('share_consent'),
+        可推廣性:         radio('scalability'),
+        他人採用:         radio('adoption'),
+        願意簡報:         radio('presentation_willing'),
+        影片連結:         v('video_url'),
+        報名時間:         new Date().toLocaleString('zh-TW')
+      };
+
+      // show loading
+      var btn = document.querySelector('.btn-submit');
+      var origText = btn.innerHTML;
+      btn.innerHTML = '送出中…';
+      btn.disabled = true;
+
+      // demo mode
+      if (POWER_AUTOMATE_URL === 'https://default24de0681c8f746e88da71f5b393d83.4d.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/f2f7b475f1074d689e9cc6292b2e3986/triggers/manual/paths/invoke?api-version=1'){
+        setTimeout(function(){
+          showSuccess();
+        }, 800);
+        return;
+      }
+
+      fetch(POWER_AUTOMATE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(function(r){
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        showSuccess();
+      })
+      .catch(function(err){
+        alert('送出失敗，請稍後再試或聯絡主辦單位。\n錯誤：' + err.message);
+        btn.innerHTML = origText;
+        btn.disabled = false;
+      });
+    }
+
+    function showSuccess(){
       sections.forEach(function(s){
-        var node=document.getElementById('sec-'+s);
+        var node = document.getElementById('sec-'+s);
         if (node) node.classList.remove('visible');
       });
       var prog = document.querySelector('.form-progress');
       if (prog) prog.style.display = 'none';
-
       document.getElementById('success').classList.add('visible');
       window.scrollTo(0,0);
-
-      // TODO: 你要串後端（Google Form / Apps Script / API）可在此送出資料
     }
   </script>
 </body>
