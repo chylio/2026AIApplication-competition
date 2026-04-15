@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 應用實才徵集計畫 ─ A+1 for One Health</title>
+<title>AI 應用競賽 ─ A+1 for One Health</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -63,38 +63,40 @@ nav{
 /* HERO */
 .hero{
   flex:1;
-  position:relative;
+  display:grid;
+  grid-template-columns:1fr auto;
   min-height:100vh;
-  display:flex;
-  align-items:stretch;
+  background:linear-gradient(160deg,#0d1b3e 0%,#1a3a7a 55%,#0d2d55 100%);
+  position:relative;
+  overflow:hidden;
 }
-.hero-bg-poster{
-  position:absolute;inset:0;
-  z-index:0;
-}
-.hero-bg-poster img{
-  width:100%;height:100%;
-  object-fit:cover;
-  object-position:center top;
-  display:block;
-}
-.hero-bg-poster::after{
+.hero::before{
   content:'';
   position:absolute;inset:0;
-  background:linear-gradient(
-    to right,
-    rgba(8,16,40,0.92) 0%,
-    rgba(8,16,40,0.80) 40%,
-    rgba(8,16,40,0.20) 65%,
-    rgba(8,16,40,0.02) 100%
-  );
+  background:radial-gradient(ellipse at 25% 60%,rgba(45,107,196,0.3) 0%,transparent 60%);
+  pointer-events:none;
+}
+/* poster column */
+.hero-bg-poster{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:80px 48px 80px 0;
+  z-index:2;
+}
+.hero-bg-poster img{
+  height:82vh;
+  max-height:700px;
+  width:auto;
+  display:block;
+  border-radius:12px;
+  box-shadow:0 24px 64px rgba(0,0,0,0.5);
 }
 .hero-left{
   position:relative;z-index:2;
-  width:52%;
   display:flex;flex-direction:column;justify-content:center;
-  padding:120px 64px 80px;
-  flex-shrink:0;
+  padding:120px 56px 80px 64px;
 }
 .hero-left::after{
   content:'';
@@ -506,7 +508,9 @@ select{
 /* responsive */
 @media(max-width:768px){
   .hero{grid-template-columns:1fr;}
-  .hero-left{width:100%;padding:100px 28px 60px;}
+  .hero{grid-template-columns:1fr;}
+  .hero-bg-poster{display:none;}
+  .hero-left{padding:100px 28px 60px;}
   nav{padding:20px 24px;}
   .deadline-banner{padding:12px 24px;gap:20px;}
   .form-topbar,.form-progress{padding-left:20px;padding-right:20px;}
@@ -968,14 +972,7 @@ select{
 // ── Embed hero image ──
 (function(){
   var img=document.getElementById('hero-img');
-  // Image will be loaded from same folder as HTML
   img.src='2025.jpg';
-  img.onerror=function(){
-    // fallback gradient if image not found
-    var parent=img.parentElement;
-    parent.style.background='linear-gradient(135deg,#1a3a7a,#2d6bc4)';
-    img.style.display='none';
-  };
 })();
 
 // ── Navigation ──
