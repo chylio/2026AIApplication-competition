@@ -1264,18 +1264,39 @@
       var text = await res.text();
       var data;
       try {
-        data = JSON.parse(text);
-      } catch (e) {
-        throw new Error('後端回傳非 JSON：' + text);
-      }
+  // form-urlencoded（避免 preflight）
+  var params = new URLSearchParams();
+  Object.keys(payload).forEach(function(k){
+    params.append(k, payload[k]);
+  });
 
-      if (!data || data.ok !== true) {
-        throw new Error((data && data.error) ? data.error : '寫入失敗（未知錯誤）');
-      }
+  var res = await fetch(GOOGLE_SCRIPT_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+    body: params.toString()
+  });
 
-      showSuccess();
-    } catch (e) {
-      alert('送出失敗：' + (e && e.message ? e.message : e));
+  // 只要 HTTP 有回來（甚至回應內容讀不到），就先當成功顯示成功頁
+  // 避免「資料已寫入但前端讀不到回應」造成 Failed to fetch 嚇到使用者
+  showSuccess();
+
+  // 下面是「加強確認」：能讀到就檢查 ok；讀不到就忽略
+  try {
+    var text = await res.text();
+    if (text) {
+      var data = JSON.parse(text);
+      if (data && data.ok === false) {
+        // 真的後端回失敗，才提示（也可改成回到表單）
+        alert('送出失敗：' + (data.error || '未知錯誤'));
+      }
+    }
+  } catch (_) {
+    // 讀不到回應時不做任何事（避免顯示失敗）
+  }
+
+} catch (e) {
+  // 只有 fetch 真的丟出錯誤（例如網路斷線）才算失敗
+  alert('送出失敗：' + (e && e.message ? e.message : e));
     } finally {
       if (btn) {
         btn.disabled = false;
