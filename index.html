@@ -35,7 +35,7 @@
       font-family:'Noto Sans TC',sans-serif;
       color:var(--ink);
       overflow-x:hidden;
-      /* 旁邊留白同底色（整個 body 都是同一個背景） */
+      /* landing 背景（同底色延伸至兩側留白） */
       background:
         radial-gradient(1200px 600px at 18% 25%, rgba(91,168,255,.18) 0%, transparent 55%),
         radial-gradient(1200px 700px at 82% 68%, rgba(56,168,78,.12) 0%, transparent 58%),
@@ -45,7 +45,7 @@
     /* ────── LANDING PAGE ────── */
     #landing{min-height:100vh;display:flex;flex-direction:column;position:relative;}
 
-    /* NAV (液態玻璃) */
+    /* NAV (玻璃) */
     nav{
       position:fixed;top:0;left:0;right:0;z-index:50;
       display:flex;align-items:center;justify-content:space-between;
@@ -75,7 +75,6 @@
       box-shadow:0 10px 24px rgba(0,0,0,.25);
     }
 
-    /* HERO 外框：把內容「玻璃化」，但整個頁面背景維持一致 */
     .hero-shell{
       width:min(1480px, calc(100% - 48px));
       margin:84px auto 28px;
@@ -98,7 +97,6 @@
       opacity:.9;
     }
     .hero-shell::after{
-      /* 玻璃高光 */
       content:'';
       position:absolute;
       left:-20%;
@@ -112,13 +110,12 @@
       filter: blur(2px);
     }
 
-    /* HERO 內容 */
     .hero{
       position:relative;
       z-index:2;
       min-height: calc(100vh - 220px);
       display:grid;
-      grid-template-columns: 1fr 1fr; /* 右邊佔一半 */
+      grid-template-columns: 1fr 1fr;
       gap:56px;
       padding:64px 56px 46px;
     }
@@ -144,7 +141,6 @@
       box-shadow:0 0 18px rgba(200,149,42,.25);
     }
 
-    /* 左側文字放大 */
     .hero-title{
       font-family:'Noto Serif TC',serif;
       font-size:clamp(50px, 4.3vw, 78px);
@@ -170,7 +166,6 @@
       margin-bottom:24px;
     }
 
-    /* 內文也放大 */
     .hero-desc{
       font-size:18px;
       color:rgba(255,255,255,0.70);
@@ -181,7 +176,6 @@
     }
     .hero-desc strong{color:rgba(255,255,255,0.92);font-weight:600;}
 
-    /* 按鈕：液態玻璃 + 科技感 */
     .cta-group{
       display:flex;align-items:center;gap:14px;flex-wrap:wrap;
       position:relative;
@@ -251,7 +245,6 @@
     }
     .cta-info span{color:rgba(255,255,255,0.82);}
 
-    /* 底下三欄內容放大 */
     .stats-row{
       display:flex;gap:34px;
       margin-top:36px;
@@ -273,28 +266,22 @@
       letter-spacing:0.14em;
     }
 
-    /* RIGHT */
     .hero-right{
       display:flex;
       align-items:center;
       justify-content:center;
     }
     .hero-poster{
-      /* 圖片放大佔右邊一半版面 */
       width: min(720px, 100%);
       aspect-ratio: 3 / 4;
       border-radius: 22px;
       overflow:hidden;
-
-      /* glass + stroke */
       background: rgba(255,255,255,0.05);
       border:1px solid rgba(255,255,255,0.16);
       box-shadow: 0 26px 80px rgba(0,0,0,.55);
-
       position:relative;
     }
     .hero-poster::before{
-      /* 外框高光 */
       content:'';
       position:absolute; inset:0;
       background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,0));
@@ -308,11 +295,8 @@
       display:block;
       transform: scale(1.01);
     }
-
-    /* 右下白框刪除 */
     .img-badge{display:none;}
 
-    /* DEADLINE BANNER（加玻璃感並與背景一致） */
     .deadline-banner{
       width:min(1480px, calc(100% - 48px));
       margin:0 auto 32px;
@@ -337,9 +321,18 @@
     .deadline-item strong{color:rgba(255,255,255,0.95);font-weight:600;}
     .deadline-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.30);}
 
-    /* ────── FORM PAGE ────── */
+    /* ─────────────────────────────
+       FORM PAGE 字體放大（16–18px）
+       ※ 首頁保留，僅影響表單頁
+    ───────────────────────────── */
     #form-page{display:none;min-height:100vh;background:var(--surface);}
     #form-page.visible{display:block;}
+
+    /* 表單全域字級基準 */
+    #form-page{
+      font-size:16px; /* 全頁基準 16 */
+      line-height:1.65;
+    }
 
     .form-topbar{
       background:var(--blue);
@@ -347,9 +340,9 @@
       display:flex;align-items:center;justify-content:space-between;
     }
     .back-btn{
-      display:flex;align-items:center;gap:8px;
-      color:rgba(255,255,255,0.7);
-      font-size:13px;cursor:pointer;
+      display:flex;align-items:center;gap:10px;
+      color:rgba(255,255,255,0.80);
+      font-size:16px;cursor:pointer;
       background:none;border:none;
       font-family:'Noto Sans TC',sans-serif;
       letter-spacing:0.04em;
@@ -358,10 +351,10 @@
     .back-btn:hover{color:white;}
     .form-topbar-title{
       font-family:'Noto Serif TC',serif;
-      font-size:15px;color:white;font-weight:600;
+      font-size:18px;color:white;font-weight:600;
       letter-spacing:0.06em;
     }
-    .form-topbar-right{font-size:12px;color:rgba(255,255,255,0.5);}
+    .form-topbar-right{font-size:14px;color:rgba(255,255,255,0.6);}
 
     .form-progress{
       background:white;
@@ -372,155 +365,190 @@
     }
     .prog-tab{
       display:flex;align-items:center;gap:10px;
-      padding:16px 20px;
-      font-size:12.5px;
+      padding:18px 22px;
+      font-size:16px;
       color:#999;
-      letter-spacing:0.04em;
+      letter-spacing:0.02em;
       border-bottom:2px solid transparent;
       cursor:default;
       flex-shrink:0;
       transition:color 0.2s,border-color 0.2s;
+      white-space:nowrap;
     }
     .prog-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
     .prog-tab.done{color:var(--green);}
     .prog-num{
-      width:20px;height:20px;border-radius:50%;
-      border:1.5px solid currentColor;
+      width:24px;height:24px;border-radius:50%;
+      border:1.6px solid currentColor;
       display:flex;align-items:center;justify-content:center;
-      font-size:10px;font-weight:500;
+      font-size:12px;font-weight:700;
     }
     .prog-tab.active .prog-num{background:var(--blue);border-color:var(--blue);color:white;}
     .prog-tab.done .prog-num{background:var(--green);border-color:var(--green);color:white;}
 
-    .form-body{max-width:760px;margin:0 auto;padding:40px 24px 100px;}
+    .form-body{max-width:860px;margin:0 auto;padding:44px 24px 110px;}
+
     .form-section{display:none;}
     .form-section.visible{display:block;animation:fadeUp 0.3s ease;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
     .sec-header{
       display:flex;align-items:center;gap:18px;
-      margin-bottom:32px;
+      margin-bottom:34px;
       padding-bottom:20px;
       border-bottom:2px solid #e0e8f0;
     }
     .sec-letter{
       font-family:'Noto Serif TC',serif;
-      font-size:40px;font-weight:300;
-      color:var(--blue);line-height:1;width:44px;flex-shrink:0;
+      font-size:44px;font-weight:300;
+      color:var(--blue);line-height:1;width:50px;flex-shrink:0;
     }
     .sec-label{
       font-family:'Noto Serif TC',serif;
-      font-size:21px;font-weight:600;color:var(--ink);
+      font-size:26px;font-weight:700;color:var(--ink);
     }
-    .sec-note{font-size:13px;color:#888;margin-top:3px;}
+    .sec-note{font-size:16px;color:#667;margin-top:4px;}
 
     .fg{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;margin-bottom:18px;}
     .fg.full{grid-template-columns:1fr;}
     .fg.three{grid-template-columns:1fr 1fr 1fr;}
-    .f{display:flex;flex-direction:column;gap:6px;}
+    .f{display:flex;flex-direction:column;gap:8px;}
     .f.s2{grid-column:span 2;}
     .f.s3{grid-column:span 3;}
 
-    label{font-size:13px;font-weight:500;color:#445;letter-spacing:0.02em;}
-    .req{color:var(--blue);margin-left:2px;}
+    label{
+      font-size:16px;
+      font-weight:700;
+      color:#334;
+      letter-spacing:0.01em;
+    }
+    .req{color:var(--blue);margin-left:4px;font-weight:800;}
 
     input[type=text],input[type=email],input[type=tel],input[type=url],textarea,select{
       width:100%;
-      border:1px solid #d0dcea;border-radius:8px;
-      padding:10px 13px;font-size:14px;
-      font-family:'Noto Sans TC',sans-serif;color:var(--ink);
-      background:white;transition:border-color 0.15s,box-shadow 0.15s;
+      border:1px solid #cfdceb;border-radius:10px;
+      padding:13px 14px;
+      font-size:16px;
+      font-family:'Noto Sans TC',sans-serif;
+      color:var(--ink);
+      background:white;
+      transition:border-color 0.15s,box-shadow 0.15s;
       -webkit-appearance:none;appearance:none;
     }
+    input::placeholder, textarea::placeholder{
+      color:#93a1b2;
+      font-size:16px;
+    }
+
     input:focus,textarea:focus,select:focus{
       outline:none;border-color:var(--blue-light);
-      box-shadow:0 0 0 3px rgba(45,107,196,0.12);
+      box-shadow:0 0 0 4px rgba(45,107,196,0.14);
     }
-    textarea{resize:vertical;min-height:90px;line-height:1.7;}
+    textarea{resize:vertical;min-height:120px;line-height:1.8;font-size:16px;}
 
     select{
       background-repeat:no-repeat;
       background-position:right 12px center;
-      padding-right:36px;
+      padding-right:42px;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
 
-    .hint{font-size:12px;color:#aaa;margin-top:2px;}
-    .charcount{font-size:11px;color:#aaa;text-align:right;margin-top:2px;}
+    .hint{font-size:15px;color:#8b97a6;margin-top:6px;}
+    .charcount{font-size:14px;color:#8b97a6;text-align:right;margin-top:6px;}
     .charcount.over{color:#c0392b;}
 
-    .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px;}
+    .pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px;}
     .pill{
-      display:flex;align-items:center;gap:7px;
-      padding:7px 14px;border:1px solid #d0dcea;border-radius:30px;
-      cursor:pointer;font-size:13px;color:#557;
-      transition:all 0.15s;background:white;user-select:none;
+      display:flex;align-items:center;gap:9px;
+      padding:10px 16px;
+      border:1px solid #cfdceb;border-radius:999px;
+      cursor:pointer;
+      font-size:16px;
+      color:#445;
+      transition:all 0.15s;
+      background:white;
+      user-select:none;
     }
     .pill:hover{border-color:var(--blue-light);color:var(--blue);}
     .pill:has(input:checked){
-      border-color:var(--blue);background:#eaf1fb;color:var(--blue);
+      border-color:var(--blue);
+      background:#eaf1fb;
+      color:var(--blue);
     }
-    .pill input{width:14px;height:14px;accent-color:var(--blue);margin:0;padding:0;border:none;box-shadow:none;flex-shrink:0;}
+    .pill input{width:16px;height:16px;accent-color:var(--blue);margin:0;padding:0;border:none;box-shadow:none;flex-shrink:0;}
 
     .notice{
-      background:#fffbf0;border:1px solid #ead888;border-left:4px solid var(--gold);
-      border-radius:10px;padding:14px 18px;margin-bottom:14px;
-      font-size:13px;color:#5a4800;line-height:1.8;
+      background:#fffbf0;border:1px solid #ead888;border-left:5px solid var(--gold);
+      border-radius:12px;
+      padding:16px 18px;margin-bottom:14px;
+      font-size:16px;
+      color:#5a4800;
+      line-height:1.85;
     }
 
     .btn-row{
       display:flex;align-items:center;justify-content:space-between;
-      margin-top:40px;padding-top:28px;border-top:1px solid #e0e8f0;
+      margin-top:44px;padding-top:28px;border-top:1px solid #e0e8f0;
       gap:12px;
     }
     .btn-secondary{
-      background:none;border:1.5px solid #d0dcea;border-radius:10px;
-      padding:11px 18px;font-size:14px;cursor:pointer;color:#557;
-      font-family:'Noto Sans TC',sans-serif;letter-spacing:0.04em;
+      background:none;border:1.5px solid #cfdceb;border-radius:12px;
+      padding:13px 18px;
+      font-size:16px;
+      cursor:pointer;color:#445;
+      font-family:'Noto Sans TC',sans-serif;
+      letter-spacing:0.04em;
       transition:all 0.2s;
+      font-weight:700;
     }
-    .btn-secondary:hover{border-color:#aaa;color:var(--ink);}
+    .btn-secondary:hover{border-color:#8898aa;color:var(--ink);}
     .btn-primary{
       background:linear-gradient(135deg,var(--blue-light),var(--blue));
-      color:white;border:none;border-radius:10px;
-      padding:12px 22px;font-size:14px;font-weight:500;cursor:pointer;
-      font-family:'Noto Sans TC',sans-serif;letter-spacing:0.05em;
+      color:white;border:none;border-radius:12px;
+      padding:13px 22px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      font-family:'Noto Sans TC',sans-serif;
+      letter-spacing:0.04em;
       display:flex;align-items:center;gap:8px;
-      transition:all 0.2s;box-shadow:0 3px 12px rgba(26,75,140,0.3);
+      transition:all 0.2s;
+      box-shadow:0 10px 24px rgba(26,75,140,0.22);
     }
-    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,75,140,0.4);}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(26,75,140,0.26);}
     .btn-submit{background:linear-gradient(135deg,var(--green-light),var(--green));}
-    .btn-submit:hover{box-shadow:0 6px 20px rgba(42,122,58,0.4);}
+    .btn-submit:hover{box-shadow:0 14px 28px rgba(42,122,58,0.26);}
 
     .decl{
-      background:#f4f8ff;border:1px solid #d0dcea;border-radius:12px;
+      background:#f4f8ff;border:1px solid #cfdceb;border-radius:14px;
       padding:22px;margin-bottom:22px;
+      font-size:16px;
     }
-    .decl-title{font-weight:500;font-size:14px;margin-bottom:12px;color:var(--ink);}
-    .decl ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
-    .decl ul li{font-size:13px;color:#557;padding-left:16px;position:relative;}
-    .decl ul li::before{content:'·';position:absolute;left:4px;color:var(--blue);}
+    .decl-title{font-weight:900;font-size:18px;margin-bottom:12px;color:var(--ink);}
+    .decl ul{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+    .decl ul li{font-size:16px;color:#445;padding-left:16px;position:relative;line-height:1.85;}
+    .decl ul li::before{content:'·';position:absolute;left:4px;color:var(--blue);font-weight:900;}
     .agree-row{
       display:flex;align-items:flex-start;gap:10px;
-      padding-top:14px;border-top:1px solid #d0dcea;
+      padding-top:14px;border-top:1px solid #cfdceb;
     }
-    .agree-row input{width:16px;height:16px;accent-color:var(--blue);flex-shrink:0;margin-top:3px;}
-    .agree-row label{font-size:13px;color:#445;font-weight:400;letter-spacing:0;}
+    .agree-row input{width:18px;height:18px;accent-color:var(--blue);flex-shrink:0;margin-top:4px;}
+    .agree-row label{font-size:16px;color:#334;font-weight:600;letter-spacing:0;}
 
     .success-wrap{
       display:none;
       min-height:70vh;align-items:center;justify-content:center;
-      flex-direction:column;text-align:center;padding:60px 24px;
+      flex-direction:column;text-align:center;padding:70px 24px;
     }
     .success-wrap.visible{display:flex;}
     .success-icon{
-      width:72px;height:72px;
+      width:78px;height:78px;
       background:#e8f7ec;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      margin-bottom:24px;
+      margin-bottom:22px;
     }
-    .success-title{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:600;margin-bottom:12px;}
-    .success-sub{font-size:15px;color:#667;line-height:1.8;max-width:480px;}
+    .success-title{font-family:'Noto Serif TC',serif;font-size:30px;font-weight:700;margin-bottom:12px;}
+    .success-sub{font-size:18px;color:#556;line-height:1.9;max-width:560px;}
 
     /* responsive */
     @media(max-width: 1100px){
@@ -536,6 +564,11 @@
       .stats-row{gap:20px;}
       .hero-desc{font-size:16px;}
       .stat-num{font-size:24px;}
+
+      .form-topbar,.form-progress{padding-left:20px;padding-right:20px;}
+      .form-body{padding:34px 16px 90px;}
+      .fg,.fg.three{grid-template-columns:1fr;}
+      .f.s2,.f.s3{grid-column:span 1;}
     }
   </style>
 </head>
@@ -550,7 +583,6 @@
         奇美醫療財團法人奇美醫院
         <span>AI 應用競賽</span>
       </div>
-      <!-- 右上立即報名按鈕已刪除 -->
     </nav>
 
     <div class="hero-shell">
@@ -681,7 +713,7 @@
           <div class="sec-letter">A</div>
           <div>
             <div class="sec-label">申請人基本資料</div>
-            <div class="sec-note">請填寫您的個人及單��資訊</div>
+            <div class="sec-note">請填寫您的個人及單位資訊</div>
           </div>
         </div>
 
@@ -1000,7 +1032,7 @@
         <p class="success-sub">
           感謝您參與 AI 應用競賽。<br>
           我們已收到您的報名資料，評審委員將於審閱後與您聯繫。<br><br>
-          <span style="font-size:13px;color:#aaa;">如有任何問題，請聯繫深耕辦公室｜吳曉琪53710。</span>
+          <span style="font-size:16px;color:#889;">如有任何問題，請聯繫深耕辦公室｜吳曉琪53710。</span>
         </p>
       </div>
     </div>
