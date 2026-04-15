@@ -824,14 +824,7 @@ select{
       </div>
 
       <div class="fg">
-        <div class="f">
-          <label>是否有佐證資料？</label>
-          <div class="pills" style="flex-direction:column;align-items:flex-start;">
-            <label class="pill"><input type="radio" name="evidence" value="有截圖或紀錄"> 有截圖或紀錄（請於影片中展示）</label>
-            <label class="pill"><input type="radio" name="evidence" value="有口頭估算"> 有口頭估算</label>
-            <label class="pill"><input type="radio" name="evidence" value="無"> 無</label>
-          </div>
-        </div>
+
         <div class="f">
           <label>主要受益對象</label>
           <div class="pills" style="flex-direction:column;align-items:flex-start;">
@@ -844,24 +837,18 @@ select{
         </div>
       </div>
 
-      <!-- VIDEO UPLOAD -->
+      <!-- VIDEO LINK -->
       <div style="margin-top:12px;">
-        <label style="display:block;margin-bottom:8px;">說明影片上傳 <span class="req">*</span></label>
+        <label style="display:block;margin-bottom:8px;">說明影片連結 <span class="req">*</span></label>
         <div class="notice">
-          <strong>📹 影片上傳提醒</strong><br>
-          請上傳 <strong>3 分鐘以內</strong>的說明影片，清楚呈現：① 工作情境　② AI 操作流程　③ 實際效益。<br>
-          影片為評審重要評分依據，請確保畫面與聲音清晰，且<strong>不得出現真實病人個人資料</strong>。
+          <strong>📹 影片上傳說明</strong><br>
+          請確保連結可供評審委員開啟檢視，且<strong>不得出現真實病人個人資料</strong>。<br>
+          請先將影片（5 分鐘以內）上傳至 <strong>OneDrive 或 Google Drive</strong>，再將分享連結貼於下方。<br>
+          影片應清楚呈現：① 工作情境　② AI 操作流程　③ 實際效益。
         </div>
-        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('video-input').click()">
-          <input type="file" id="video-input" accept="video/*" onchange="handleVideoUpload(this)">
-          <svg class="upload-icon" id="upload-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="40" height="40" rx="8" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M22 28V16M16 22l6-6 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M14 32h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <div class="upload-text" id="upload-text">點擊選擇影片檔案</div>
-          <div class="upload-sub" id="upload-sub">支援 MP4、MOV、AVI，建議不超過 500MB</div>
-          <div class="upload-fname" id="upload-fname"></div>
+        <div class="f" style="margin-top:8px;">
+          <input type="url" id="video_url" placeholder="https://..." style="width:100%;">
+          <div class="hint">範例：https://drive.google.com/... 或 https://youtu.be/...</div>
         </div>
       </div>
 
@@ -1038,25 +1025,7 @@ document.querySelectorAll('input[name="category"]').forEach(function(cb){
 });
 
 
-// ── Video upload ──
-function handleVideoUpload(input){
-  var zone=document.getElementById('upload-zone');
-  var fname=document.getElementById('upload-fname');
-  var text=document.getElementById('upload-text');
-  var sub=document.getElementById('upload-sub');
-  if(input.files&&input.files[0]){
-    var f=input.files[0];
-    zone.classList.add('has-file');
-    fname.textContent='✓ '+f.name;
-    text.textContent='影片已選擇';
-    sub.textContent=formatBytes(f.size);
-  }
-}
-function formatBytes(b){
-  if(b>=1073741824)return(b/1073741824).toFixed(1)+' GB';
-  if(b>=1048576)return(b/1048576).toFixed(1)+' MB';
-  return(b/1024).toFixed(0)+' KB';
-}
+
 
 // ── Submit ──
 function submitForm(){
@@ -1095,7 +1064,8 @@ function submitForm(){
     可推廣性: radio('scalability'),
     他人採用: radio('adoption'),
     願意簡報: radio('presentation_willing'),
-    報名時間: new Date().toLocaleString('zh-TW')
+    報名時間: new Date().toLocaleString('zh-TW'),
+    影片連結: v('video_url')
   };
 
   // TODO: Replace with your Power Automate HTTP trigger URL
@@ -1117,14 +1087,11 @@ function submitForm(){
   }
 
   // Build FormData (for file + JSON)
-  var fd=new FormData();
-  fd.append('data', JSON.stringify(data));
-  var videoInput=document.getElementById('video-input');
-  if(videoInput.files&&videoInput.files[0]){
-    fd.append('video', videoInput.files[0], data['姓名']+'_'+data['照護流程方案名稱']+'.mp4');
-  }
+  data['影片連結'] = v('video_url');
 
-  fetch(POWER_AUTOMATE_URL,{method:'POST',body:fd})
+  fetch(POWER_AUTOMATE_URL,{method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)})
     .then(function(r){
       if(!r.ok) throw new Error('HTTP '+r.status);
       document.getElementById('sec-E').style.display='none';
