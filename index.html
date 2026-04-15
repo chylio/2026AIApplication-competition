@@ -325,7 +325,6 @@
     #form-page{display:none;min-height:100vh;background:var(--surface);}
     #form-page.visible{display:block;}
 
-    /* 表單全域字級基準（加大到 20px） */
     #form-page{
       font-size:20px;
       line-height:1.75;
@@ -406,12 +405,10 @@
     }
     .sec-note{font-size:18px;color:#667;margin-top:4px;}
 
-    /* 題目由上到下排：全部改成單欄 */
     .fg{display:grid;grid-template-columns:1fr;gap:0;margin-bottom:0;}
     .fg.full{grid-template-columns:1fr;}
     .fg.three{grid-template-columns:1fr;}
 
-    /* 題目區塊化：明顯區隔 */
     .f{
       display:flex;
       flex-direction:column;
@@ -575,7 +572,6 @@
     .success-title{font-family:'Noto Serif TC',serif;font-size:34px;font-weight:700;margin-bottom:12px;}
     .success-sub{font-size:20px;color:#556;line-height:1.9;max-width:660px;}
 
-    /* responsive */
     @media(max-width: 1100px){
       .hero-shell{width:min(980px, calc(100% - 40px));}
       .hero{grid-template-columns:1fr; gap:34px; padding:54px 22px 40px; min-height:auto;}
@@ -978,7 +974,7 @@
 
         <div class="fg full">
           <div class="f">
-            <label>資料流說明 <span class="req">*</span>（請說明輸入 AI工具的資料是什麼類型）</label>
+            <label>資料流說明 <span class="req">*</span>（請說明輸入 AI 的是什麼類型資料）</label>
             <textarea id="data_flow" placeholder="例：輸入的是去識別化的護理記錄文字，不含姓名及病歷號…" rows="3" required></textarea>
           </div>
         </div>
@@ -987,7 +983,7 @@
           <div class="f">
             <label>是否同意案例對外分享？</label>
             <div class="pills" style="flex-direction:column;align-items:flex-start;">
-              <label class="pill"><input type="radio" name="share_consent" value="同意去識別化後對外分享"> 同意去識別化後對外分享</label>
+              <label class="pill"><input type="radio" name="share_consent" value="同意去識別化後對外分享"> 同意去識別化後對外分享（計入加分）</label>
               <label class="pill"><input type="radio" name="share_consent" value="僅同意院內分享"> 僅同意院內分享</label>
               <label class="pill"><input type="radio" name="share_consent" value="不同意對外分享"> 不同意對外分享</label>
             </div>
@@ -1012,6 +1008,10 @@
             </div>
           </div>
           <div class="f">
+            <label>是否願意在院內分享會簡報說明？</label>
+            <div class="pills" style="flex-direction:column;align-items:flex-start;">
+              <label class="pill"><input type="radio" name="presentation_willing" value="是若入選願意進行5分鐘報告"> 是，若入選願意進行第二階段 5 分鐘報告</label>
+              <label class="pill"><input type="radio" name="presentation_willing" value="否僅參加第一階段評選"> 否（僅參加第一階段評選）</label>
             </div>
           </div>
         </div>
@@ -1059,260 +1059,240 @@
   </div>
 
   <script>
-  // Google Apps Script Web App（最新部署 URL）
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwvfLic-TUduOsNj_zqflhRGnansqh-r0Yx6LZF2g8NN6s9fJfU8MzCUNN8z4PdvfkvQ/exec";
+    // Google Apps Script Web App（最新部署 URL）
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwvfLic-TUduOsNj_zqflhRGnansqh-r0Yx6LZF2g8NN6s9fJfU8MzCUNN8z4PdvfkvQ/exec";
 
-  // 保留 2025.jpg
-  (function(){
-    var img = document.getElementById('hero-img');
-    if (img) img.src = '2025.jpg';
-  })();
+    // 保留 2025.jpg
+    (function(){
+      var img = document.getElementById('hero-img');
+      if (img) img.src = '2025.jpg';
+    })();
 
-  var currentSection = 'A';
-  var sections = ['A','B','C','D','E'];
+    var currentSection = 'A';
+    var sections = ['A','B','C','D','E'];
 
-  function showForm(){
-    document.getElementById('landing').style.display='none';
-    document.getElementById('form-page').classList.add('visible');
-    window.scrollTo(0,0);
-  }
-  function backToLanding(){
-    document.getElementById('form-page').classList.remove('visible');
-    document.getElementById('landing').style.display='flex';
-    document.getElementById('landing').style.flexDirection='column';
-    window.scrollTo(0,0);
-  }
-
-  function setTab(sec){
-    sections.forEach(function(s){
-      var tab=document.getElementById('tab-'+s);
-      if (!tab) return;
-      tab.classList.remove('active');
-    });
-    var active=document.getElementById('tab-'+sec);
-    if (active) active.classList.add('active');
-  }
-
-  function goTo(sec){
-    if (!validateSection(currentSection)) return;
-
-    document.getElementById('sec-'+currentSection).classList.remove('visible');
-    var tabCur=document.getElementById('tab-'+currentSection);
-    if (tabCur){
-      tabCur.classList.remove('active');
-      tabCur.classList.add('done');
+    function showForm(){
+      document.getElementById('landing').style.display='none';
+      document.getElementById('form-page').classList.add('visible');
+      window.scrollTo(0,0);
+    }
+    function backToLanding(){
+      document.getElementById('form-page').classList.remove('visible');
+      document.getElementById('landing').style.display='flex';
+      document.getElementById('landing').style.flexDirection='column';
+      window.scrollTo(0,0);
     }
 
-    document.getElementById('sec-'+sec).classList.add('visible');
-    setTab(sec);
-    currentSection = sec;
-    window.scrollTo(0,0);
-  }
-
-  function updateCount(el, counterId, max){
-    var v = (el.value || '').trim();
-    var cnt = v.length;
-    var box = document.getElementById(counterId);
-    if (!box) return;
-    box.textContent = cnt + ' / ' + max + ' 字';
-    box.classList.toggle('over', cnt > max);
-  }
-
-  function getCheckedValues(selector) {
-    return Array.from(document.querySelectorAll(selector))
-      .filter(function(x){ return x.checked; })
-      .map(function(x){ return x.value; });
-  }
-
-  function getRadioValue(name) {
-    var el = document.querySelector('input[type="radio"][name="' + name + '"]:checked');
-    return el ? el.value : '';
-  }
-
-  // B: 類別「其他」顯示輸入框
-  (function(){
-    var other = document.getElementById('cat_other');
-    var wrap = document.getElementById('category_other_wrap');
-    if (!other || !wrap) return;
-
-    function sync(){
-      wrap.style.display = other.checked ? 'block' : 'none';
-    }
-    other.addEventListener('change', sync);
-    sync();
-  })();
-
-  function validateSection(sec){
-    var root = document.getElementById('sec-'+sec);
-    if (!root) return true;
-
-    var required = root.querySelectorAll('[required]');
-    for (var i=0;i<required.length;i++){
-      var el = required[i];
-
-      if (el.type === 'radio'){
-        var name = el.name;
-        if (!name) continue;
-        var checked = root.querySelector('input[type="radio"][name="'+name+'"]:checked');
-        if (!checked){
-          alert('請完成必填項目。');
-          return false;
-        }
-        continue;
-      }
-
-      if (el.type === 'checkbox' && el.name){
-        var group = root.querySelectorAll('input[type="checkbox"][name="'+el.name+'"]');
-        var anyChecked = false;
-        for (var j=0;j<group.length;j++){
-          if (group[j].checked){ anyChecked = true; break; }
-        }
-        if (!anyChecked){
-          alert('請完成必填項目。');
-          return false;
-        }
-        continue;
-      }
-
-      if (!el.value){
-        el.focus();
-        alert('請完成必填項目。');
-        return false;
-      }
+    function setTab(sec){
+      sections.forEach(function(s){
+        var tab=document.getElementById('tab-'+s);
+        if (!tab) return;
+        tab.classList.remove('active');
+      });
+      var active=document.getElementById('tab-'+sec);
+      if (active) active.classList.add('active');
     }
 
-    if (sec === 'B'){
+    function goTo(sec){
+      if (!validateSection(currentSection)) return;
+
+      document.getElementById('sec-'+currentSection).classList.remove('visible');
+      var tabCur=document.getElementById('tab-'+currentSection);
+      if (tabCur){
+        tabCur.classList.remove('active');
+        tabCur.classList.add('done');
+      }
+
+      document.getElementById('sec-'+sec).classList.add('visible');
+      setTab(sec);
+      currentSection = sec;
+      window.scrollTo(0,0);
+    }
+
+    function updateCount(el, counterId, max){
+      var v = (el.value || '').trim();
+      var cnt = v.length;
+      var box = document.getElementById(counterId);
+      if (!box) return;
+      box.textContent = cnt + ' / ' + max + ' 字';
+      box.classList.toggle('over', cnt > max);
+    }
+
+    function getCheckedValues(selector) {
+      return Array.from(document.querySelectorAll(selector))
+        .filter(function(x){ return x.checked; })
+        .map(function(x){ return x.value; });
+    }
+
+    function getRadioValue(name) {
+      var el = document.querySelector('input[type="radio"][name="' + name + '"]:checked');
+      return el ? el.value : '';
+    }
+
+    (function(){
       var other = document.getElementById('cat_other');
-      var otherText = document.getElementById('category_other');
-      if (other && other.checked && otherText && !otherText.value.trim()){
-        otherText.focus();
-        alert('請填寫「其他」應用類別說明。');
-        return false;
+      var wrap = document.getElementById('category_other_wrap');
+      if (!other || !wrap) return;
+
+      function sync(){
+        wrap.style.display = other.checked ? 'block' : 'none';
       }
-    }
+      other.addEventListener('change', sync);
+      sync();
+    })();
 
-    return true;
-  }
+    function validateSection(sec){
+      var root = document.getElementById('sec-'+sec);
+      if (!root) return true;
 
-  async function submitForm(){
-    for (var i=0;i<sections.length;i++){
-      if (!validateSection(sections[i])) return;
-    }
+      var required = root.querySelectorAll('[required]');
+      for (var i=0;i<required.length;i++){
+        var el = required[i];
 
-    var payload = {
-      name: document.getElementById('name').value.trim(),
-      employee_id: document.getElementById('employee_id').value.trim(),
-      department: document.getElementById('department').value.trim(),
-      job_title: document.getElementById('job_title').value.trim(),
-      phone: (document.getElementById('phone').value || '').trim(),
-      email: document.getElementById('email').value.trim(),
+        if (el.type === 'radio'){
+          var name = el.name;
+          if (!name) continue;
+          var checked = root.querySelector('input[type="radio"][name="'+name+'"]:checked');
+          if (!checked){
+            alert('請完成必填項目。');
+            return false;
+          }
+          continue;
+        }
 
-      project_name: document.getElementById('project_name').value.trim(),
-      ai_tool: getRadioValue('ai_tool'),
-      category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
-      category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
-      freq: getRadioValue('freq'),
+        if (el.type === 'checkbox' && el.name){
+          var group = root.querySelectorAll('input[type="checkbox"][name="'+el.name+'"]');
+          var anyChecked = false;
+          for (var j=0;j<group.length;j++){
+            if (group[j].checked){ anyChecked = true; break; }
+          }
+          if (!anyChecked){
+            alert('請完成必填項目。');
+            return false;
+          }
+          continue;
+        }
 
-      pain_point: document.getElementById('pain_point').value.trim(),
-      ai_solution: document.getElementById('ai_solution').value.trim(),
-      workflow: (document.getElementById('workflow').value || '').trim(),
-      sop: getRadioValue('sop'),
-      integration: getRadioValue('integration'),
-
-      quant_benefit: document.getElementById('quant_benefit').value.trim(),
-      qual_benefit: (document.getElementById('qual_benefit').value || '').trim(),
-      beneficiary: getCheckedValues('input[type="checkbox"][name="beneficiary"]').join(','),
-      video_url: document.getElementById('video_url').value.trim(),
-
-      patient_data: getRadioValue('patient_data'),
-      data_flow: document.getElementById('data_flow').value.trim(),
-      share_consent: getRadioValue('share_consent'),
-      scalability: getRadioValue('scalability'),
-      adoption: getRadioValue('adoption'),
-      presentation_willing: getRadioValue('presentation_willing'),
-
-      agree: document.getElementById('agree').checked ? 'yes' : 'no'
-    };
-
-    // UI: 防止重複送出
-    var btn = document.querySelector('.btn-submit');
-    var oldHtml = btn ? btn.innerHTML : '';
-    if (btn) {
-      btn.disabled = true;
-      btn.style.opacity = '0.7';
-      btn.style.cursor = 'not-allowed';
-      btn.innerHTML = '送出中…';
-    }
-
-    try {
-      // form-urlencoded（避免觸發 preflight，GitHub Pages 最穩）
-      var params = new URLSearchParams();
-      Object.keys(payload).forEach(function(k){
-        params.append(k, payload[k]);
-      });
-
-      var res = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body: params.toString()
-      });
-
-      var text = await res.text();
-      var data;
-      try {
-  // form-urlencoded（避免 preflight）
-  var params = new URLSearchParams();
-  Object.keys(payload).forEach(function(k){
-    params.append(k, payload[k]);
-  });
-
-  var res = await fetch(GOOGLE_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-    body: params.toString()
-  });
-
-  // 只要 HTTP 有回來（甚至回應內容讀不到），就先當成功顯示成功頁
-  // 避免「資料已寫入但前端讀不到回應」造成 Failed to fetch 嚇到使用者
-  showSuccess();
-
-  // 下面是「加強確認」：能讀到就檢查 ok；讀不到就忽略
-  try {
-    var text = await res.text();
-    if (text) {
-      var data = JSON.parse(text);
-      if (data && data.ok === false) {
-        // 真的後端回失敗，才提示（也可改成回到表單）
-        alert('送出失敗：' + (data.error || '未知錯誤'));
+        if (!el.value){
+          el.focus();
+          alert('請完成必填項目。');
+          return false;
+        }
       }
-    }
-  } catch (_) {
-    // 讀不到回應時不做任何事（避免顯示失敗）
-  }
 
-} catch (e) {
-  // 只有 fetch 真的丟出錯誤（例如網路斷線）才算失敗
-  alert('送出失敗：' + (e && e.message ? e.message : e));
-    } finally {
+      if (sec === 'B'){
+        var other = document.getElementById('cat_other');
+        var otherText = document.getElementById('category_other');
+        if (other && other.checked && otherText && !otherText.value.trim()){
+          otherText.focus();
+          alert('請填寫「其他」應用類別說明。');
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    async function submitForm(){
+      for (var i=0;i<sections.length;i++){
+        if (!validateSection(sections[i])) return;
+      }
+
+      var payload = {
+        name: document.getElementById('name').value.trim(),
+        employee_id: document.getElementById('employee_id').value.trim(),
+        department: document.getElementById('department').value.trim(),
+        job_title: document.getElementById('job_title').value.trim(),
+        phone: (document.getElementById('phone').value || '').trim(),
+        email: document.getElementById('email').value.trim(),
+
+        project_name: document.getElementById('project_name').value.trim(),
+        ai_tool: getRadioValue('ai_tool'),
+        category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
+        category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
+        freq: getRadioValue('freq'),
+
+        pain_point: document.getElementById('pain_point').value.trim(),
+        ai_solution: document.getElementById('ai_solution').value.trim(),
+        workflow: (document.getElementById('workflow').value || '').trim(),
+        sop: getRadioValue('sop'),
+        integration: getRadioValue('integration'),
+
+        quant_benefit: document.getElementById('quant_benefit').value.trim(),
+        qual_benefit: (document.getElementById('qual_benefit').value || '').trim(),
+        beneficiary: getCheckedValues('input[type="checkbox"][name="beneficiary"]').join(','),
+        video_url: document.getElementById('video_url').value.trim(),
+
+        patient_data: getRadioValue('patient_data'),
+        data_flow: document.getElementById('data_flow').value.trim(),
+        share_consent: getRadioValue('share_consent'),
+        scalability: getRadioValue('scalability'),
+        adoption: getRadioValue('adoption'),
+        presentation_willing: getRadioValue('presentation_willing'),
+
+        agree: document.getElementById('agree').checked ? 'yes' : 'no'
+      };
+
+      var btn = document.querySelector('.btn-submit');
+      var oldHtml = btn ? btn.innerHTML : '';
       if (btn) {
-        btn.disabled = false;
-        btn.style.opacity = '';
-        btn.style.cursor = '';
-        btn.innerHTML = oldHtml;
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        btn.style.cursor = 'not-allowed';
+        btn.innerHTML = '送出中…';
+      }
+
+      try {
+        // form-urlencoded（GitHub Pages 最穩，避免 preflight）
+        var params = new URLSearchParams();
+        Object.keys(payload).forEach(function(k){
+          params.append(k, payload[k]);
+        });
+
+        var res = await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: params.toString()
+        });
+
+        // UX：先顯示成功（避免「已寫入但讀回應失敗」造成 Failed to fetch）
+        showSuccess();
+
+        // 盡量讀回應做確認；讀不到就忽略
+        try {
+          var text = await res.text();
+          if (text) {
+            var data = JSON.parse(text);
+            if (data && data.ok === false) {
+              alert('送出失敗：' + (data.error || '未知錯誤'));
+            }
+          }
+        } catch (_) {
+          // ignore
+        }
+
+      } catch (e) {
+        alert('送出失敗：' + (e && e.message ? e.message : e));
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.style.opacity = '';
+          btn.style.cursor = '';
+          btn.innerHTML = oldHtml;
+        }
       }
     }
-  }
 
-  function showSuccess(){
-    sections.forEach(function(s){
-      var node = document.getElementById('sec-'+s);
-      if (node) node.classList.remove('visible');
-    });
-    var prog = document.querySelector('.form-progress');
-    if (prog) prog.style.display = 'none';
-    document.getElementById('success').classList.add('visible');
-    window.scrollTo(0,0);
-  }
-</script>
+    function showSuccess(){
+      sections.forEach(function(s){
+        var node = document.getElementById('sec-'+s);
+        if (node) node.classList.remove('visible');
+      });
+      var prog = document.querySelector('.form-progress');
+      if (prog) prog.style.display = 'none';
+      document.getElementById('success').classList.add('visible');
+      window.scrollTo(0,0);
+    }
+  </script>
 </body>
 </html>
