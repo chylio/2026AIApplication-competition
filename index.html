@@ -1063,233 +1063,239 @@
   </div>
 
   <script>
-    // Google Apps Script Web App（方案2：可讀回應）
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzaR6xNW4t2IrkQFljmmYbz7JVJmoMRA9ICOsayIeAUjG2H49lhkvGbqA_AkvK-AliGBw/exec";
+  // Google Apps Script Web App（最新部署 URL）
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwvfLic-TUduOsNj_zqflhRGnansqh-r0Yx6LZF2g8NN6s9fJfU8MzCUNN8z4PdvfkvQ/exec";
 
-    // 保留 2025.jpg
-    (function(){
-      var img = document.getElementById('hero-img');
-      if (img) img.src = '2025.jpg';
-    })();
+  // 保留 2025.jpg
+  (function(){
+    var img = document.getElementById('hero-img');
+    if (img) img.src = '2025.jpg';
+  })();
 
-    var currentSection = 'A';
-    var sections = ['A','B','C','D','E'];
+  var currentSection = 'A';
+  var sections = ['A','B','C','D','E'];
 
-    function showForm(){
-      document.getElementById('landing').style.display='none';
-      document.getElementById('form-page').classList.add('visible');
-      window.scrollTo(0,0);
-    }
-    function backToLanding(){
-      document.getElementById('form-page').classList.remove('visible');
-      document.getElementById('landing').style.display='flex';
-      document.getElementById('landing').style.flexDirection='column';
-      window.scrollTo(0,0);
-    }
+  function showForm(){
+    document.getElementById('landing').style.display='none';
+    document.getElementById('form-page').classList.add('visible');
+    window.scrollTo(0,0);
+  }
+  function backToLanding(){
+    document.getElementById('form-page').classList.remove('visible');
+    document.getElementById('landing').style.display='flex';
+    document.getElementById('landing').style.flexDirection='column';
+    window.scrollTo(0,0);
+  }
 
-    function setTab(sec){
-      sections.forEach(function(s){
-        var tab=document.getElementById('tab-'+s);
-        if (!tab) return;
-        tab.classList.remove('active');
-      });
-      var active=document.getElementById('tab-'+sec);
-      if (active) active.classList.add('active');
-    }
+  function setTab(sec){
+    sections.forEach(function(s){
+      var tab=document.getElementById('tab-'+s);
+      if (!tab) return;
+      tab.classList.remove('active');
+    });
+    var active=document.getElementById('tab-'+sec);
+    if (active) active.classList.add('active');
+  }
 
-    function goTo(sec){
-      if (!validateSection(currentSection)) return;
+  function goTo(sec){
+    if (!validateSection(currentSection)) return;
 
-      document.getElementById('sec-'+currentSection).classList.remove('visible');
-      var tabCur=document.getElementById('tab-'+currentSection);
-      if (tabCur){
-        tabCur.classList.remove('active');
-        tabCur.classList.add('done');
-      }
-
-      document.getElementById('sec-'+sec).classList.add('visible');
-      setTab(sec);
-      currentSection = sec;
-      window.scrollTo(0,0);
+    document.getElementById('sec-'+currentSection).classList.remove('visible');
+    var tabCur=document.getElementById('tab-'+currentSection);
+    if (tabCur){
+      tabCur.classList.remove('active');
+      tabCur.classList.add('done');
     }
 
-    function updateCount(el, counterId, max){
-      var v = (el.value || '').trim();
-      var cnt = v.length;
-      var box = document.getElementById(counterId);
-      if (!box) return;
-      box.textContent = cnt + ' / ' + max + ' 字';
-      box.classList.toggle('over', cnt > max);
+    document.getElementById('sec-'+sec).classList.add('visible');
+    setTab(sec);
+    currentSection = sec;
+    window.scrollTo(0,0);
+  }
+
+  function updateCount(el, counterId, max){
+    var v = (el.value || '').trim();
+    var cnt = v.length;
+    var box = document.getElementById(counterId);
+    if (!box) return;
+    box.textContent = cnt + ' / ' + max + ' 字';
+    box.classList.toggle('over', cnt > max);
+  }
+
+  function getCheckedValues(selector) {
+    return Array.from(document.querySelectorAll(selector))
+      .filter(function(x){ return x.checked; })
+      .map(function(x){ return x.value; });
+  }
+
+  function getRadioValue(name) {
+    var el = document.querySelector('input[type="radio"][name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+
+  // B: 類別「其他」顯示輸入框
+  (function(){
+    var other = document.getElementById('cat_other');
+    var wrap = document.getElementById('category_other_wrap');
+    if (!other || !wrap) return;
+
+    function sync(){
+      wrap.style.display = other.checked ? 'block' : 'none';
     }
+    other.addEventListener('change', sync);
+    sync();
+  })();
 
-    function getCheckedValues(selector) {
-      return Array.from(document.querySelectorAll(selector))
-        .filter(function(x){ return x.checked; })
-        .map(function(x){ return x.value; });
-    }
+  function validateSection(sec){
+    var root = document.getElementById('sec-'+sec);
+    if (!root) return true;
 
-    function getRadioValue(name) {
-      var el = document.querySelector('input[type="radio"][name="' + name + '"]:checked');
-      return el ? el.value : '';
-    }
+    var required = root.querySelectorAll('[required]');
+    for (var i=0;i<required.length;i++){
+      var el = required[i];
 
-    // B: 類別「其他」顯示輸入框
-    (function(){
-      var other = document.getElementById('cat_other');
-      var wrap = document.getElementById('category_other_wrap');
-      if (!other || !wrap) return;
-
-      function sync(){
-        wrap.style.display = other.checked ? 'block' : 'none';
-      }
-      other.addEventListener('change', sync);
-      sync();
-    })();
-
-    function validateSection(sec){
-      var root = document.getElementById('sec-'+sec);
-      if (!root) return true;
-
-      var required = root.querySelectorAll('[required]');
-      for (var i=0;i<required.length;i++){
-        var el = required[i];
-
-        if (el.type === 'radio'){
-          var name = el.name;
-          if (!name) continue;
-          var checked = root.querySelector('input[type="radio"][name="'+name+'"]:checked');
-          if (!checked){
-            alert('請完成必填項目。');
-            return false;
-          }
-          continue;
-        }
-
-        if (el.type === 'checkbox' && el.name){
-          var group = root.querySelectorAll('input[type="checkbox"][name="'+el.name+'"]');
-          var anyChecked = false;
-          for (var j=0;j<group.length;j++){
-            if (group[j].checked){ anyChecked = true; break; }
-          }
-          if (!anyChecked){
-            alert('請完成必填項目。');
-            return false;
-          }
-          continue;
-        }
-
-        if (!el.value){
-          el.focus();
+      if (el.type === 'radio'){
+        var name = el.name;
+        if (!name) continue;
+        var checked = root.querySelector('input[type="radio"][name="'+name+'"]:checked');
+        if (!checked){
           alert('請完成必填項目。');
           return false;
         }
+        continue;
       }
 
-      if (sec === 'B'){
-        var other = document.getElementById('cat_other');
-        var otherText = document.getElementById('category_other');
-        if (other && other.checked && otherText && !otherText.value.trim()){
-          otherText.focus();
-          alert('請填寫「其他」應用類別說明。');
+      if (el.type === 'checkbox' && el.name){
+        var group = root.querySelectorAll('input[type="checkbox"][name="'+el.name+'"]');
+        var anyChecked = false;
+        for (var j=0;j<group.length;j++){
+          if (group[j].checked){ anyChecked = true; break; }
+        }
+        if (!anyChecked){
+          alert('請完成必填項目。');
           return false;
         }
+        continue;
       }
 
-      return true;
-    }
-
-    async function submitForm(){
-      for (var i=0;i<sections.length;i++){
-        if (!validateSection(sections[i])) return;
-      }
-
-      var payload = {
-        name: document.getElementById('name').value.trim(),
-        employee_id: document.getElementById('employee_id').value.trim(),
-        department: document.getElementById('department').value.trim(),
-        job_title: document.getElementById('job_title').value.trim(),
-        phone: (document.getElementById('phone').value || '').trim(),
-        email: document.getElementById('email').value.trim(),
-
-        project_name: document.getElementById('project_name').value.trim(),
-        ai_tool: getRadioValue('ai_tool'),
-        category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
-        category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
-        freq: getRadioValue('freq'),
-
-        pain_point: document.getElementById('pain_point').value.trim(),
-        ai_solution: document.getElementById('ai_solution').value.trim(),
-        workflow: (document.getElementById('workflow').value || '').trim(),
-        sop: getRadioValue('sop'),
-        integration: getRadioValue('integration'),
-
-        quant_benefit: document.getElementById('quant_benefit').value.trim(),
-        qual_benefit: (document.getElementById('qual_benefit').value || '').trim(),
-        beneficiary: getCheckedValues('input[type="checkbox"][name="beneficiary"]').join(','),
-        video_url: document.getElementById('video_url').value.trim(),
-
-        patient_data: getRadioValue('patient_data'),
-        data_flow: document.getElementById('data_flow').value.trim(),
-        share_consent: getRadioValue('share_consent'),
-        scalability: getRadioValue('scalability'),
-        adoption: getRadioValue('adoption'),
-        presentation_willing: getRadioValue('presentation_willing'),
-
-        agree: document.getElementById('agree').checked ? 'yes' : 'no'
-      };
-
-      var btn = document.querySelector('.btn-submit');
-      var oldHtml = btn ? btn.innerHTML : '';
-      if (btn) {
-        btn.disabled = true;
-        btn.style.opacity = '0.7';
-        btn.style.cursor = 'not-allowed';
-        btn.innerHTML = '送出中…';
-      }
-
-      try {
-        var res = await fetch(GOOGLE_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        var text = await res.text();
-        var data;
-        try {
-          data = JSON.parse(text);
-        } catch (e) {
-          throw new Error('後端回傳非 JSON：' + text);
-        }
-
-        if (!data || data.ok !== true) {
-          throw new Error((data && data.error) ? data.error : '寫入失敗（未知錯誤）');
-        }
-
-        showSuccess();
-
-      } catch (e) {
-        alert('送出失敗：' + (e && e.message ? e.message : e));
-      } finally {
-        if (btn) {
-          btn.disabled = false;
-          btn.style.opacity = '';
-          btn.style.cursor = '';
-          btn.innerHTML = oldHtml;
-        }
+      if (!el.value){
+        el.focus();
+        alert('請完成必填項目。');
+        return false;
       }
     }
 
-    function showSuccess(){
-      sections.forEach(function(s){
-        var node = document.getElementById('sec-'+s);
-        if (node) node.classList.remove('visible');
+    if (sec === 'B'){
+      var other = document.getElementById('cat_other');
+      var otherText = document.getElementById('category_other');
+      if (other && other.checked && otherText && !otherText.value.trim()){
+        otherText.focus();
+        alert('請填寫「其他」應用類別說明。');
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  async function submitForm(){
+    for (var i=0;i<sections.length;i++){
+      if (!validateSection(sections[i])) return;
+    }
+
+    var payload = {
+      name: document.getElementById('name').value.trim(),
+      employee_id: document.getElementById('employee_id').value.trim(),
+      department: document.getElementById('department').value.trim(),
+      job_title: document.getElementById('job_title').value.trim(),
+      phone: (document.getElementById('phone').value || '').trim(),
+      email: document.getElementById('email').value.trim(),
+
+      project_name: document.getElementById('project_name').value.trim(),
+      ai_tool: getRadioValue('ai_tool'),
+      category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
+      category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
+      freq: getRadioValue('freq'),
+
+      pain_point: document.getElementById('pain_point').value.trim(),
+      ai_solution: document.getElementById('ai_solution').value.trim(),
+      workflow: (document.getElementById('workflow').value || '').trim(),
+      sop: getRadioValue('sop'),
+      integration: getRadioValue('integration'),
+
+      quant_benefit: document.getElementById('quant_benefit').value.trim(),
+      qual_benefit: (document.getElementById('qual_benefit').value || '').trim(),
+      beneficiary: getCheckedValues('input[type="checkbox"][name="beneficiary"]').join(','),
+      video_url: document.getElementById('video_url').value.trim(),
+
+      patient_data: getRadioValue('patient_data'),
+      data_flow: document.getElementById('data_flow').value.trim(),
+      share_consent: getRadioValue('share_consent'),
+      scalability: getRadioValue('scalability'),
+      adoption: getRadioValue('adoption'),
+      presentation_willing: getRadioValue('presentation_willing'),
+
+      agree: document.getElementById('agree').checked ? 'yes' : 'no'
+    };
+
+    // UI: 防止重複送出
+    var btn = document.querySelector('.btn-submit');
+    var oldHtml = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+      btn.style.cursor = 'not-allowed';
+      btn.innerHTML = '送出中…';
+    }
+
+    try {
+      // form-urlencoded（避免觸發 preflight，GitHub Pages 最穩）
+      var params = new URLSearchParams();
+      Object.keys(payload).forEach(function(k){
+        params.append(k, payload[k]);
       });
-      var prog = document.querySelector('.form-progress');
-      if (prog) prog.style.display = 'none';
-      document.getElementById('success').classList.add('visible');
-      window.scrollTo(0,0);
+
+      var res = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: params.toString()
+      });
+
+      var text = await res.text();
+      var data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        throw new Error('後端回傳非 JSON：' + text);
+      }
+
+      if (!data || data.ok !== true) {
+        throw new Error((data && data.error) ? data.error : '寫入失敗（未知錯誤）');
+      }
+
+      showSuccess();
+    } catch (e) {
+      alert('送出失敗：' + (e && e.message ? e.message : e));
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = '';
+        btn.style.cursor = '';
+        btn.innerHTML = oldHtml;
+      }
     }
-  </script>
+  }
+
+  function showSuccess(){
+    sections.forEach(function(s){
+      var node = document.getElementById('sec-'+s);
+      if (node) node.classList.remove('visible');
+    });
+    var prog = document.querySelector('.form-progress');
+    if (prog) prog.style.display = 'none';
+    document.getElementById('success').classList.add('visible');
+    window.scrollTo(0,0);
+  }
+</script>
 </body>
 </html>
