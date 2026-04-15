@@ -1,1110 +1,1129 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 應用競賽 ─ A+1 for One Health</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --blue:#1a4b8c;
-  --blue-light:#2d6bc4;
-  --green:#2a7a3a;
-  --green-light:#38a84e;
-  --ink:#0d1b2a;
-  --white:#ffffff;
-  --gold:#c8952a;
-  --surface:#f4f8ff;
-}
-html{scroll-behavior:smooth;}
-body{font-family:'Noto Sans TC',sans-serif;color:var(--ink);background:#fff;overflow-x:hidden;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 應用競賽 ─ A+1 for One Health</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-/* ────── LANDING PAGE ────── */
-#landing{min-height:100vh;display:flex;flex-direction:column;position:relative;}
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --blue:#1a4b8c;
+      --blue-light:#2d6bc4;
+      --green:#2a7a3a;
+      --green-light:#38a84e;
+      --ink:#0d1b2a;
+      --white:#ffffff;
+      --gold:#c8952a;
+      --surface:#f4f8ff;
 
-/* NAV */
-nav{
-  position:absolute;top:0;left:0;right:0;z-index:50;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:20px 48px;
-}
-.nav-logo{
-  font-family:'Noto Serif TC',serif;
-  font-size:15px;font-weight:600;color:white;
-  letter-spacing:0.08em;
-  display:flex;align-items:center;gap:10px;
-}
-.nav-logo span{
-  display:inline-block;
-  background:rgba(255,255,255,0.15);
-  border:1px solid rgba(255,255,255,0.3);
-  border-radius:3px;
-  padding:3px 9px;
-  font-size:11px;
-  letter-spacing:0.15em;
-  font-weight:300;
-  backdrop-filter:blur(4px);
-}
-.nav-btn{
-  font-size:13px;color:white;
-  border:1.5px solid rgba(255,255,255,0.6);
-  border-radius:30px;
-  padding:8px 22px;
-  cursor:pointer;
-  transition:all 0.2s;
-  text-decoration:none;
-  backdrop-filter:blur(4px);
-  background:rgba(255,255,255,0.1);
-  letter-spacing:0.05em;
-}
-.nav-btn:hover{background:rgba(255,255,255,0.25);}
+      --radius-lg:16px;
+      --radius-md:12px;
+      --shadow-lg:0 24px 64px rgba(0,0,0,.45);
+      --shadow-md:0 12px 30px rgba(0,0,0,.25);
+    }
 
-/* HERO */
-.hero{
-  flex:1;
-  display:grid;
-  grid-template-columns:1fr auto;
-  min-height:100vh;
-  background:linear-gradient(160deg,#0d1b3e 0%,#1a3a7a 55%,#0d2d55 100%);
-  position:relative;
-  overflow:hidden;
-}
-.hero::before{
-  content:'';
-  position:absolute;inset:0;
-  background:radial-gradient(ellipse at 25% 60%,rgba(45,107,196,0.3) 0%,transparent 60%);
-  pointer-events:none;
-}
-/* poster column */
-.hero-bg-poster{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:80px 48px 80px 0;
-  z-index:2;
-}
-.hero-bg-poster img{
-  height:82vh;
-  max-height:700px;
-  width:auto;
-  display:block;
-  border-radius:12px;
-  box-shadow:0 24px 64px rgba(0,0,0,0.5);
-}
-.hero-left{
-  position:relative;z-index:2;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:120px 56px 80px 64px;
-}
-.hero-left::after{
-  content:'';
-  position:absolute;
-  bottom:-80px;right:-80px;
-  width:320px;height:320px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,0.04);
-}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:'Noto Sans TC',sans-serif;
+      color:var(--ink);
+      background:#fff;
+      overflow-x:hidden;
+    }
 
-.tag-line{
-  position:relative;z-index:2;
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
-  color:var(--gold);
-  margin-bottom:28px;
-  font-weight:300;
-}
-.tag-line::before{
-  content:'';
-  display:inline-block;
-  width:28px;height:1px;
-  background:var(--gold);
-}
-.hero-title{
-  position:relative;z-index:2;
-  font-family:'Noto Serif TC',serif;
-  font-size:clamp(32px,3.5vw,48px);
-  font-weight:700;
-  color:white;
-  line-height:1.2;
-  letter-spacing:0.03em;
-  margin-bottom:10px;
-}
-.hero-title em{
-  font-style:normal;
-  color:#5ba8ff;
-}
-.hero-sub-title{
-  position:relative;z-index:2;
-  font-family:'Noto Serif TC',serif;
-  font-size:clamp(16px,1.8vw,22px);
-  font-weight:300;
-  color:rgba(255,255,255,0.7);
-  letter-spacing:0.1em;
-  margin-bottom:36px;
-}
-.hero-desc{
-  position:relative;z-index:2;
-  font-size:14px;
-  color:rgba(255,255,255,0.55);
-  line-height:1.9;
-  max-width:380px;
-  margin-bottom:48px;
-  font-weight:300;
-}
-.hero-desc strong{color:rgba(255,255,255,0.85);font-weight:500;}
+    /* ────── LANDING PAGE ────── */
+    #landing{min-height:100vh;display:flex;flex-direction:column;position:relative;}
 
-.cta-group{
-  position:relative;z-index:2;
-  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
-}
-.cta-main{
-  display:inline-flex;align-items:center;gap:10px;
-  background:linear-gradient(135deg,#2d6bc4,#1a4b8c);
-  color:white;
-  font-size:15px;font-weight:500;
-  padding:14px 32px;
-  border-radius:4px;
-  cursor:pointer;
-  border:none;
-  transition:all 0.25s;
-  letter-spacing:0.05em;
-  box-shadow:0 4px 24px rgba(0,0,0,0.3);
-  font-family:'Noto Sans TC',sans-serif;
-}
-.cta-main:hover{
-  transform:translateY(-2px);
-  box-shadow:0 8px 32px rgba(45,107,196,0.5);
-  background:linear-gradient(135deg,#3a7ad4,#2258a8);
-}
-.cta-main svg{transition:transform 0.2s;}
-.cta-main:hover svg{transform:translateX(4px);}
+    /* NAV */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:50;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 48px;
+      background: linear-gradient(180deg, rgba(13,27,62,.85), rgba(13,27,62,0));
+      backdrop-filter: blur(6px);
+    }
+    .nav-logo{
+      font-family:'Noto Serif TC',serif;
+      font-size:15px;font-weight:600;color:white;
+      letter-spacing:0.08em;
+      display:flex;align-items:center;gap:10px;
+      white-space:nowrap;
+    }
+    .nav-logo span{
+      display:inline-block;
+      background:rgba(255,255,255,0.15);
+      border:1px solid rgba(255,255,255,0.3);
+      border-radius:3px;
+      padding:3px 9px;
+      font-size:11px;
+      letter-spacing:0.15em;
+      font-weight:300;
+      backdrop-filter:blur(4px);
+    }
+    .nav-btn{
+      font-size:13px;color:white;
+      border:1.5px solid rgba(255,255,255,0.6);
+      border-radius:30px;
+      padding:8px 22px;
+      cursor:pointer;
+      transition:all 0.2s;
+      text-decoration:none;
+      backdrop-filter:blur(4px);
+      background:rgba(255,255,255,0.1);
+      letter-spacing:0.05em;
+      white-space:nowrap;
+    }
+    .nav-btn:hover{background:rgba(255,255,255,0.25);}
 
-/* PDF button */
-.cta-pdf{
-  display:inline-flex;align-items:center;gap:10px;
-  background:rgba(255,255,255,0.08);
-  border:1.5px solid rgba(255,255,255,0.35);
-  color:rgba(255,255,255,0.9);
-  font-size:14px;font-weight:400;
-  padding:13px 24px;
-  border-radius:4px;
-  cursor:pointer;
-  text-decoration:none;
-  transition:all 0.22s;
-  letter-spacing:0.05em;
-  font-family:'Noto Sans TC',sans-serif;
-  backdrop-filter:blur(4px);
-  position:relative;z-index:2;
-}
-.cta-pdf:hover{
-  background:rgba(255,255,255,0.18);
-  border-color:rgba(255,255,255,0.7);
-  color:white;
-  transform:translateY(-1px);
-}
-.cta-pdf .pdf-icon-wrap{
-  width:32px;height:32px;
-  background:rgba(200,65,42,0.85);
-  border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  transition:background 0.2s;
-}
-.cta-pdf:hover .pdf-icon-wrap{background:rgba(200,65,42,1);}
-.cta-pdf-text{display:flex;flex-direction:column;gap:1px;text-align:left;}
-.cta-pdf-label{font-size:13px;font-weight:500;line-height:1.2;}
-.cta-pdf-sub{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.08em;font-weight:300;}
+    /* HERO (UI/UX 改版) */
+    .hero{
+      min-height:100vh;
+      display:grid;
+      grid-template-columns: minmax(420px, 560px) 1fr;
+      gap:48px;
+      padding:120px 56px 72px 64px;
+      background:linear-gradient(160deg,#0d1b3e 0%,#173a7d 55%,#0d2d55 100%);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:'';
+      position:absolute;inset:0;
+      background:
+        radial-gradient(ellipse at 18% 35%, rgba(91,168,255,.22) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(56,168,78,.12) 0%, transparent 55%);
+      pointer-events:none;
+    }
 
-.cta-info{
-  font-size:12px;
-  color:rgba(255,255,255,0.4);
-  letter-spacing:0.04em;
-}
-.cta-info span{color:rgba(255,255,255,0.7);}
+    .hero-left{
+      position:relative;z-index:2;
+      display:flex;flex-direction:column;justify-content:center;
+      max-width:560px;
+    }
+    .tag-line{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+      color:rgba(200,149,42,.95);
+      margin-bottom:22px;
+      font-weight:400;
+    }
+    .tag-line::before{
+      content:'';
+      width:34px;height:1px;
+      background:rgba(200,149,42,.9);
+    }
+    .hero-title{
+      font-family:'Noto Serif TC',serif;
+      font-size:clamp(34px, 3.4vw, 54px);
+      font-weight:700;
+      color:white;
+      line-height:1.16;
+      letter-spacing:0.02em;
+      margin-bottom:12px;
+    }
+    .hero-title em{font-style:normal;color:#66b2ff;}
 
-/* STATS ROW */
-.stats-row{
-  position:relative;z-index:2;
-  display:flex;gap:32px;
-  margin-top:48px;
-  padding-top:32px;
-  border-top:1px solid rgba(255,255,255,0.1);
-}
-.stat{display:flex;flex-direction:column;gap:4px;}
-.stat-num{
-  font-family:'Noto Serif TC',serif;
-  font-size:24px;font-weight:600;
-  color:white;
-}
-.stat-label{
-  font-size:11px;
-  color:rgba(255,255,255,0.4);
-  letter-spacing:0.08em;
-}
+    .hero-sub-title{
+      font-family:'Noto Serif TC',serif;
+      font-size:clamp(16px, 1.5vw, 22px);
+      font-weight:400;
+      color:rgba(255,255,255,0.72);
+      letter-spacing:0.08em;
+      margin-bottom:26px;
+    }
 
-/* HERO RIGHT - IMAGE */
-/* hero-right removed - poster is now full-bleed background */
-/* green badge overlay */
-.img-badge{
-  position:absolute;
-  bottom:32px;right:32px;
-  z-index:10;
-  background:rgba(255,255,255,0.92);
-  backdrop-filter:blur(8px);
-  border-radius:6px;
-  padding:16px 20px;
-  display:flex;flex-direction:column;gap:4px;
-  box-shadow:0 8px 32px rgba(0,0,0,0.15);
-}
-.img-badge-title{
-  font-size:11px;letter-spacing:0.12em;
-  color:var(--green);font-weight:500;
-  text-transform:uppercase;
-}
-.img-badge-main{
-  font-family:'Noto Serif TC',serif;
-  font-size:22px;font-weight:700;
-  color:var(--ink);line-height:1.2;
-}
-.img-badge-sub{
-  font-size:12px;color:#666;
-  letter-spacing:0.05em;
-}
+    .hero-desc{
+      font-size:14.5px;
+      color:rgba(255,255,255,0.62);
+      line-height:1.95;
+      max-width:46ch;
+      margin-bottom:34px;
+      font-weight:300;
+    }
+    .hero-desc strong{color:rgba(255,255,255,0.88);font-weight:500;}
 
-/* DEADLINE BANNER */
-.deadline-banner{
-  background:linear-gradient(90deg,#0d2d55,#1a4b8c,#0d2d55);
-  padding:14px 48px;
-  display:flex;align-items:center;justify-content:center;gap:48px;
-  flex-wrap:wrap;
-}
-.deadline-item{
-  display:flex;align-items:center;gap:12px;
-  font-size:13px;color:rgba(255,255,255,0.7);
-  letter-spacing:0.05em;
-}
-.deadline-item strong{
-  color:white;font-weight:500;
-}
-.deadline-dot{
-  width:4px;height:4px;
-  border-radius:50%;background:rgba(255,255,255,0.3);
-}
+    .cta-group{
+      display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+      position:relative;z-index:2;
+    }
+    .cta-main{
+      display:inline-flex;align-items:center;gap:10px;
+      background:linear-gradient(135deg,#2d6bc4,#1a4b8c);
+      color:white;
+      font-size:15px;font-weight:500;
+      padding:14px 32px;
+      border-radius:10px;
+      cursor:pointer;
+      border:none;
+      transition:all 0.25s;
+      letter-spacing:0.05em;
+      box-shadow:0 4px 24px rgba(0,0,0,0.3);
+      font-family:'Noto Sans TC',sans-serif;
+    }
+    .cta-main:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 32px rgba(45,107,196,0.5);
+      background:linear-gradient(135deg,#3a7ad4,#2258a8);
+    }
+    .cta-main svg{transition:transform 0.2s;}
+    .cta-main:hover svg{transform:translateX(4px);}
 
-/* ────── FORM PAGE ────── */
-#form-page{
-  display:none;
-  min-height:100vh;
-  background:var(--surface);
-}
-#form-page.visible{display:block;}
+    .cta-pdf{
+      display:inline-flex;align-items:center;gap:10px;
+      background:rgba(255,255,255,0.08);
+      border:1.5px solid rgba(255,255,255,0.35);
+      color:rgba(255,255,255,0.9);
+      font-size:14px;font-weight:400;
+      padding:13px 18px;
+      border-radius:10px;
+      cursor:pointer;
+      text-decoration:none;
+      transition:all 0.22s;
+      letter-spacing:0.05em;
+      font-family:'Noto Sans TC',sans-serif;
+      backdrop-filter:blur(4px);
+      position:relative;z-index:2;
+    }
+    .cta-pdf:hover{
+      background:rgba(255,255,255,0.18);
+      border-color:rgba(255,255,255,0.7);
+      color:white;
+      transform:translateY(-1px);
+    }
+    .cta-pdf .pdf-icon-wrap{
+      width:32px;height:32px;
+      background:rgba(200,65,42,0.85);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+      transition:background 0.2s;
+    }
+    .cta-pdf:hover .pdf-icon-wrap{background:rgba(200,65,42,1);}
+    .cta-pdf-text{display:flex;flex-direction:column;gap:1px;text-align:left;}
+    .cta-pdf-label{font-size:13px;font-weight:500;line-height:1.2;}
+    .cta-pdf-sub{font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:0.08em;font-weight:300;}
 
-.form-topbar{
-  background:var(--blue);
-  padding:16px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.back-btn{
-  display:flex;align-items:center;gap:8px;
-  color:rgba(255,255,255,0.7);
-  font-size:13px;cursor:pointer;
-  background:none;border:none;
-  font-family:'Noto Sans TC',sans-serif;
-  letter-spacing:0.04em;
-  transition:color 0.2s;
-}
-.back-btn:hover{color:white;}
-.form-topbar-title{
-  font-family:'Noto Serif TC',serif;
-  font-size:15px;color:white;font-weight:600;
-  letter-spacing:0.06em;
-}
-.form-topbar-right{font-size:12px;color:rgba(255,255,255,0.5);}
+    .cta-info{
+      font-size:12px;
+      color:rgba(255,255,255,0.42);
+      letter-spacing:0.04em;
+      margin-top:8px;
+    }
+    .cta-info span{color:rgba(255,255,255,0.75);}
 
-/* progress tabs */
-.form-progress{
-  background:white;
-  border-bottom:1px solid #e0e8f0;
-  padding:0 48px;
-  display:flex;gap:0;
-  overflow-x:auto;
-}
-.prog-tab{
-  display:flex;align-items:center;gap:10px;
-  padding:16px 20px;
-  font-size:12.5px;
-  color:#999;
-  letter-spacing:0.04em;
-  border-bottom:2px solid transparent;
-  cursor:default;
-  flex-shrink:0;
-  transition:color 0.2s,border-color 0.2s;
-}
-.prog-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
-.prog-tab.done{color:var(--green);}
-.prog-num{
-  width:20px;height:20px;
-  border-radius:50%;
-  border:1.5px solid currentColor;
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:500;
-}
-.prog-tab.active .prog-num{background:var(--blue);border-color:var(--blue);color:white;}
-.prog-tab.done .prog-num{background:var(--green);border-color:var(--green);color:white;}
+    .stats-row{
+      display:flex;gap:26px;
+      margin-top:34px;
+      padding-top:26px;
+      border-top:1px solid rgba(255,255,255,0.12);
+      position:relative;z-index:2;
+      flex-wrap:wrap;
+    }
+    .stat{display:flex;flex-direction:column;gap:4px;}
+    .stat-num{
+      font-family:'Noto Serif TC',serif;
+      font-size:22px;font-weight:600;
+      color:white;
+    }
+    .stat-label{
+      font-size:11px;
+      color:rgba(255,255,255,0.42);
+      letter-spacing:0.1em;
+    }
 
-/* form content */
-.form-body{max-width:760px;margin:0 auto;padding:40px 24px 100px;}
+    .hero-right{
+      position:relative;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding-right:8px;
+    }
+    .hero-poster{
+      width:min(520px, 42vw);
+      aspect-ratio:3/4;
+      border-radius:var(--radius-lg);
+      overflow:hidden;
+      box-shadow:var(--shadow-lg);
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+    }
+    .hero-poster img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
 
-.form-section{display:none;}
-.form-section.visible{display:block;animation:fadeUp 0.3s ease;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+    .img-badge{
+      position:absolute;
+      right:24px;bottom:24px;
+      z-index:10;
+      background:rgba(255,255,255,0.92);
+      border:1px solid rgba(255,255,255,0.7);
+      border-radius:12px;
+      padding:16px 18px;
+      box-shadow:var(--shadow-md);
+      backdrop-filter:blur(10px);
+    }
+    .img-badge-title{
+      font-size:11px;letter-spacing:0.12em;
+      color:var(--green);font-weight:600;
+      text-transform:uppercase;
+    }
+    .img-badge-main{
+      font-family:'Noto Serif TC',serif;
+      font-size:20px;font-weight:700;
+      color:var(--ink);
+      margin-top:4px;
+    }
+    .img-badge-sub{
+      font-size:12px;color:#667;
+      letter-spacing:0.03em;
+      margin-top:3px;
+    }
 
-.sec-header{
-  display:flex;align-items:center;gap:18px;
-  margin-bottom:32px;
-  padding-bottom:20px;
-  border-bottom:2px solid #e0e8f0;
-}
-.sec-letter{
-  font-family:'Noto Serif TC',serif;
-  font-size:40px;font-weight:300;
-  color:var(--blue);line-height:1;width:44px;flex-shrink:0;
-}
-.sec-label{
-  font-family:'Noto Serif TC',serif;
-  font-size:21px;font-weight:600;color:var(--ink);
-}
-.sec-note{font-size:13px;color:#888;margin-top:3px;}
+    /* DEADLINE BANNER */
+    .deadline-banner{
+      background:linear-gradient(90deg,#0d2d55,#1a4b8c,#0d2d55);
+      padding:14px 48px;
+      display:flex;align-items:center;justify-content:center;gap:48px;
+      flex-wrap:wrap;
+    }
+    .deadline-item{
+      display:flex;align-items:center;gap:12px;
+      font-size:13px;color:rgba(255,255,255,0.7);
+      letter-spacing:0.05em;
+    }
+    .deadline-item strong{color:white;font-weight:500;}
+    .deadline-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.3);}
 
-/* fields */
-.fg{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;margin-bottom:18px;}
-.fg.full{grid-template-columns:1fr;}
-.fg.three{grid-template-columns:1fr 1fr 1fr;}
-.f{display:flex;flex-direction:column;gap:6px;}
-.f.s2{grid-column:span 2;}
-.f.s3{grid-column:span 3;}
+    /* ────── FORM PAGE ────── */
+    #form-page{display:none;min-height:100vh;background:var(--surface);}
+    #form-page.visible{display:block;}
 
-label{font-size:13px;font-weight:500;color:#445;letter-spacing:0.02em;}
-.req{color:var(--blue);margin-left:2px;}
+    .form-topbar{
+      background:var(--blue);
+      padding:16px 48px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .back-btn{
+      display:flex;align-items:center;gap:8px;
+      color:rgba(255,255,255,0.7);
+      font-size:13px;cursor:pointer;
+      background:none;border:none;
+      font-family:'Noto Sans TC',sans-serif;
+      letter-spacing:0.04em;
+      transition:color 0.2s;
+    }
+    .back-btn:hover{color:white;}
+    .form-topbar-title{
+      font-family:'Noto Serif TC',serif;
+      font-size:15px;color:white;font-weight:600;
+      letter-spacing:0.06em;
+    }
+    .form-topbar-right{font-size:12px;color:rgba(255,255,255,0.5);}
 
-input[type=text],input[type=email],input[type=tel],textarea,select{
-  width:100%;border:1px solid #d0dcea;border-radius:4px;
-  padding:10px 13px;font-size:14px;
-  font-family:'Noto Sans TC',sans-serif;color:var(--ink);
-  background:white;transition:border-color 0.15s,box-shadow 0.15s;
-  -webkit-appearance:none;appearance:none;
-}
-input:focus,textarea:focus,select:focus{
-  outline:none;border-color:var(--blue-light);
-  box-shadow:0 0 0 3px rgba(45,107,196,0.12);
-}
-textarea{resize:vertical;min-height:90px;line-height:1.7;}
-select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;
-}
-.hint{font-size:12px;color:#aaa;margin-top:2px;}
-.charcount{font-size:11px;color:#aaa;text-align:right;margin-top:2px;}
-.charcount.over{color:#c0392b;}
+    .form-progress{
+      background:white;
+      border-bottom:1px solid #e0e8f0;
+      padding:0 48px;
+      display:flex;gap:0;
+      overflow-x:auto;
+    }
+    .prog-tab{
+      display:flex;align-items:center;gap:10px;
+      padding:16px 20px;
+      font-size:12.5px;
+      color:#999;
+      letter-spacing:0.04em;
+      border-bottom:2px solid transparent;
+      cursor:default;
+      flex-shrink:0;
+      transition:color 0.2s,border-color 0.2s;
+    }
+    .prog-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+    .prog-tab.done{color:var(--green);}
+    .prog-num{
+      width:20px;height:20px;border-radius:50%;
+      border:1.5px solid currentColor;
+      display:flex;align-items:center;justify-content:center;
+      font-size:10px;font-weight:500;
+    }
+    .prog-tab.active .prog-num{background:var(--blue);border-color:var(--blue);color:white;}
+    .prog-tab.done .prog-num{background:var(--green);border-color:var(--green);color:white;}
 
-/* pills */
-.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px;}
-.pill{
-  display:flex;align-items:center;gap:7px;
-  padding:7px 14px;border:1px solid #d0dcea;border-radius:30px;
-  cursor:pointer;font-size:13px;color:#557;
-  transition:all 0.15s;background:white;user-select:none;
-}
-.pill:hover{border-color:var(--blue-light);color:var(--blue);}
-.pill:has(input:checked){
-  border-color:var(--blue);background:#eaf1fb;color:var(--blue);
-}
-.pill input{width:14px;height:14px;accent-color:var(--blue);margin:0;padding:0;border:none;box-shadow:none;flex-shrink:0;}
+    .form-body{max-width:760px;margin:0 auto;padding:40px 24px 100px;}
+    .form-section{display:none;}
+    .form-section.visible{display:block;animation:fadeUp 0.3s ease;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
-/* video upload */
-.upload-zone{
-  border:1.5px dashed #c0d0e4;border-radius:6px;
-  padding:36px;text-align:center;cursor:pointer;
-  transition:all 0.2s;background:#f0f5fc;
-  position:relative;overflow:hidden;
-}
-.upload-zone:hover{border-color:var(--blue);background:#e5eefa;}
-.upload-zone.has-file{border-color:var(--green);background:#eaf7ed;}
-.upload-zone input[type=file]{
-  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
-}
-.upload-icon{width:44px;height:44px;margin:0 auto 14px;opacity:0.5;}
-.upload-zone.has-file .upload-icon{opacity:1;}
-.upload-text{font-size:14px;color:#445;}
-.upload-sub{font-size:12px;color:#aaa;margin-top:5px;}
-.upload-fname{font-size:13px;color:var(--green);font-weight:500;margin-top:8px;}
+    .sec-header{
+      display:flex;align-items:center;gap:18px;
+      margin-bottom:32px;
+      padding-bottom:20px;
+      border-bottom:2px solid #e0e8f0;
+    }
+    .sec-letter{
+      font-family:'Noto Serif TC',serif;
+      font-size:40px;font-weight:300;
+      color:var(--blue);line-height:1;width:44px;flex-shrink:0;
+    }
+    .sec-label{
+      font-family:'Noto Serif TC',serif;
+      font-size:21px;font-weight:600;color:var(--ink);
+    }
+    .sec-note{font-size:13px;color:#888;margin-top:3px;}
 
-/* notice */
-.notice{
-  background:#fffbf0;border:1px solid #ead888;border-left:4px solid var(--gold);
-  border-radius:4px;padding:14px 18px;margin-bottom:24px;
-  font-size:13px;color:#5a4800;line-height:1.8;
-}
+    .fg{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px;margin-bottom:18px;}
+    .fg.full{grid-template-columns:1fr;}
+    .fg.three{grid-template-columns:1fr 1fr 1fr;}
+    .f{display:flex;flex-direction:column;gap:6px;}
+    .f.s2{grid-column:span 2;}
+    .f.s3{grid-column:span 3;}
 
-/* nav buttons */
-.btn-row{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:40px;padding-top:28px;border-top:1px solid #e0e8f0;
-}
-.btn-secondary{
-  background:none;border:1.5px solid #d0dcea;border-radius:4px;
-  padding:11px 24px;font-size:14px;cursor:pointer;color:#557;
-  font-family:'Noto Sans TC',sans-serif;letter-spacing:0.04em;
-  transition:all 0.2s;
-}
-.btn-secondary:hover{border-color:#aaa;color:var(--ink);}
-.btn-primary{
-  background:linear-gradient(135deg,var(--blue-light),var(--blue));
-  color:white;border:none;border-radius:4px;
-  padding:12px 32px;font-size:14px;font-weight:500;cursor:pointer;
-  font-family:'Noto Sans TC',sans-serif;letter-spacing:0.05em;
-  display:flex;align-items:center;gap:8px;
-  transition:all 0.2s;box-shadow:0 3px 12px rgba(26,75,140,0.3);
-}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,75,140,0.4);}
-.btn-submit{background:linear-gradient(135deg,var(--green-light),var(--green));}
-.btn-submit:hover{box-shadow:0 6px 20px rgba(42,122,58,0.4);}
+    label{font-size:13px;font-weight:500;color:#445;letter-spacing:0.02em;}
+    .req{color:var(--blue);margin-left:2px;}
 
-/* declaration */
-.decl{
-  background:#f4f8ff;border:1px solid #d0dcea;border-radius:6px;
-  padding:22px;margin-bottom:22px;
-}
-.decl-title{font-weight:500;font-size:14px;margin-bottom:12px;color:var(--ink);}
-.decl ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
-.decl ul li{font-size:13px;color:#557;padding-left:16px;position:relative;}
-.decl ul li::before{content:'·';position:absolute;left:4px;color:var(--blue);}
-.agree-row{
-  display:flex;align-items:flex-start;gap:10px;
-  padding-top:14px;border-top:1px solid #d0dcea;
-}
-.agree-row input{width:16px;height:16px;accent-color:var(--blue);flex-shrink:0;margin-top:3px;}
-.agree-row label{font-size:13px;color:#445;font-weight:400;letter-spacing:0;}
+    input[type=text],input[type=email],input[type=tel],input[type=url],textarea,select{
+      width:100%;
+      border:1px solid #d0dcea;border-radius:8px;
+      padding:10px 13px;font-size:14px;
+      font-family:'Noto Sans TC',sans-serif;color:var(--ink);
+      background:white;transition:border-color 0.15s,box-shadow 0.15s;
+      -webkit-appearance:none;appearance:none;
+    }
+    input:focus,textarea:focus,select:focus{
+      outline:none;border-color:var(--blue-light);
+      box-shadow:0 0 0 3px rgba(45,107,196,0.12);
+    }
+    textarea{resize:vertical;min-height:90px;line-height:1.7;}
 
-/* success */
-.success-wrap{
-  display:none;
-  min-height:70vh;align-items:center;justify-content:center;
-  flex-direction:column;text-align:center;padding:60px 24px;
-}
-.success-wrap.visible{display:flex;}
-.success-icon{
-  width:72px;height:72px;
-  background:#e8f7ec;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:24px;
-}
-.success-icon svg{color:var(--green);}
-.success-title{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:600;margin-bottom:12px;}
-.success-sub{font-size:15px;color:#667;line-height:1.8;max-width:480px;}
+    select{
+      background-repeat:no-repeat;
+      background-position:right 12px center;
+      padding-right:36px;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
 
-/* responsive */
-@media(max-width:768px){
-  .hero{grid-template-columns:1fr;}
-  .hero{grid-template-columns:1fr;}
-  .hero-bg-poster{display:none;}
-  .hero-left{padding:100px 28px 60px;}
-  nav{padding:20px 24px;}
-  .deadline-banner{padding:12px 24px;gap:20px;}
-  .form-topbar,.form-progress{padding-left:20px;padding-right:20px;}
-  .form-body{padding:28px 16px 80px;}
-  .fg,.fg.three{grid-template-columns:1fr;}
-  .f.s2,.f.s3{grid-column:span 1;}
-  .stats-row{gap:20px;}
-}
-</style>
+    .hint{font-size:12px;color:#aaa;margin-top:2px;}
+    .charcount{font-size:11px;color:#aaa;text-align:right;margin-top:2px;}
+    .charcount.over{color:#c0392b;}
+
+    .pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px;}
+    .pill{
+      display:flex;align-items:center;gap:7px;
+      padding:7px 14px;border:1px solid #d0dcea;border-radius:30px;
+      cursor:pointer;font-size:13px;color:#557;
+      transition:all 0.15s;background:white;user-select:none;
+    }
+    .pill:hover{border-color:var(--blue-light);color:var(--blue);}
+    .pill:has(input:checked){
+      border-color:var(--blue);background:#eaf1fb;color:var(--blue);
+    }
+    .pill input{width:14px;height:14px;accent-color:var(--blue);margin:0;padding:0;border:none;box-shadow:none;flex-shrink:0;}
+
+    .notice{
+      background:#fffbf0;border:1px solid #ead888;border-left:4px solid var(--gold);
+      border-radius:10px;padding:14px 18px;margin-bottom:14px;
+      font-size:13px;color:#5a4800;line-height:1.8;
+    }
+
+    .btn-row{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-top:40px;padding-top:28px;border-top:1px solid #e0e8f0;
+      gap:12px;
+    }
+    .btn-secondary{
+      background:none;border:1.5px solid #d0dcea;border-radius:10px;
+      padding:11px 18px;font-size:14px;cursor:pointer;color:#557;
+      font-family:'Noto Sans TC',sans-serif;letter-spacing:0.04em;
+      transition:all 0.2s;
+    }
+    .btn-secondary:hover{border-color:#aaa;color:var(--ink);}
+    .btn-primary{
+      background:linear-gradient(135deg,var(--blue-light),var(--blue));
+      color:white;border:none;border-radius:10px;
+      padding:12px 22px;font-size:14px;font-weight:500;cursor:pointer;
+      font-family:'Noto Sans TC',sans-serif;letter-spacing:0.05em;
+      display:flex;align-items:center;gap:8px;
+      transition:all 0.2s;box-shadow:0 3px 12px rgba(26,75,140,0.3);
+    }
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,75,140,0.4);}
+    .btn-submit{background:linear-gradient(135deg,var(--green-light),var(--green));}
+    .btn-submit:hover{box-shadow:0 6px 20px rgba(42,122,58,0.4);}
+
+    .decl{
+      background:#f4f8ff;border:1px solid #d0dcea;border-radius:12px;
+      padding:22px;margin-bottom:22px;
+    }
+    .decl-title{font-weight:500;font-size:14px;margin-bottom:12px;color:var(--ink);}
+    .decl ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+    .decl ul li{font-size:13px;color:#557;padding-left:16px;position:relative;}
+    .decl ul li::before{content:'·';position:absolute;left:4px;color:var(--blue);}
+    .agree-row{
+      display:flex;align-items:flex-start;gap:10px;
+      padding-top:14px;border-top:1px solid #d0dcea;
+    }
+    .agree-row input{width:16px;height:16px;accent-color:var(--blue);flex-shrink:0;margin-top:3px;}
+    .agree-row label{font-size:13px;color:#445;font-weight:400;letter-spacing:0;}
+
+    .success-wrap{
+      display:none;
+      min-height:70vh;align-items:center;justify-content:center;
+      flex-direction:column;text-align:center;padding:60px 24px;
+    }
+    .success-wrap.visible{display:flex;}
+    .success-icon{
+      width:72px;height:72px;
+      background:#e8f7ec;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin-bottom:24px;
+    }
+    .success-title{font-family:'Noto Serif TC',serif;font-size:28px;font-weight:600;margin-bottom:12px;}
+    .success-sub{font-size:15px;color:#667;line-height:1.8;max-width:480px;}
+
+    /* responsive */
+    @media(max-width: 900px){
+      .hero{
+        grid-template-columns:1fr;
+        gap:28px;
+        padding:96px 24px 40px;
+        min-height:auto;
+      }
+      .hero-left{max-width: 620px;}
+      .hero-right{justify-content:flex-start;}
+      .hero-poster{width:min(520px, 100%);}
+      nav{padding:14px 20px;}
+      .deadline-banner{padding:12px 24px;gap:20px;}
+      .form-topbar,.form-progress{padding-left:20px;padding-right:20px;}
+      .form-body{padding:28px 16px 80px;}
+      .fg,.fg.three{grid-template-columns:1fr;}
+      .f.s2,.f.s3{grid-column:span 1;}
+      .stats-row{gap:20px;}
+      .nav-logo{font-size:13px;}
+      .nav-logo span{display:none;}
+    }
+  </style>
 </head>
+
 <body>
-
-<!-- ═══════════════════════════════════════
-     LANDING PAGE
-══════════════════════════════════════════ -->
-<div id="landing">
-
-  <nav>
-    <div class="nav-logo">
-      奇美醫療財團法人奇美醫院
-      <span>AI 應用實才徵集</span>
-    </div>
-    <a class="nav-btn" href="#" onclick="showForm();return false;">立即報名 →</a>
-  </nav>
-
-  <div class="hero">
-    <div class="hero-bg-poster"><img id="hero-img" src="2025.jpg" alt="2026 AI 應用競賽海報"></div>
-    <!-- LEFT: copy -->
-    <div class="hero-left">
-      <div class="tag-line">A+1 for One Health · 2025</div>
-
-      <div class="hero-title">
-        你的 <em>AI 應用</em><br>
-        改變了什麼？
+  <!-- ═══════════════════════════════════════
+       LANDING PAGE
+  ═══════════════════════════════════════════ -->
+  <div id="landing">
+    <nav>
+      <div class="nav-logo">
+        奇美醫療財團法人奇美醫院
+        <span>AI 應用實才徵集</span>
       </div>
-      <div class="hero-sub-title">AI 應用實才徵集計畫</div>
+      <a class="nav-btn" href="#" onclick="showForm();return false;">立即報名 →</a>
+    </nav>
 
-      <p class="hero-desc">
-        我們相信，<strong>最好的 AI 應用</strong>來自最了解工作現場的你。<br>
-        無論是縮短交班時間、簡化行政流程，或是提升病人照護品質——<br>
-        只要你用 AI 解決了真實的問題，就值得被看見。
-      </p>
+    <div class="hero">
+      <!-- LEFT -->
+      <div class="hero-left">
+        <div class="tag-line">A+1 for One Health · 2026</div>
 
-      <div class="cta-group">
-        <button class="cta-main" onclick="showForm()">
-          開始報名
-          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <a class="cta-pdf" href="competition-guide.pdf" target="_blank" rel="noopener">
-          <div class="pdf-icon-wrap">
+        <div class="hero-title">
+          你的 <em>AI 應用</em><br>
+          改變了什麼？
+        </div>
+
+        <div class="hero-sub-title">AI 應用實才徵集計畫</div>
+
+        <p class="hero-desc">
+          我們相信，<strong>最好的 AI 應用</strong>來自最了解工作現場的你。<br>
+          無論是縮短交班時間、簡化行政流程，或是提升病人照護品質——<br>
+          只要你用 AI 解決了真實的問題，就值得被看見。
+        </p>
+
+        <div class="cta-group">
+          <button class="cta-main" onclick="showForm()">
+            開始報名
             <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
-              <rect x="3" y="1" width="10" height="14" rx="1.5" stroke="white" stroke-width="1.2"/>
-              <path d="M5 5h6M5 8h6M5 11h4" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
-              <path d="M9.5 1v3.5H13" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
+          </button>
+
+          <a class="cta-pdf" href="competition-guide.pdf" target="_blank" rel="noopener">
+            <div class="pdf-icon-wrap">
+              <svg width="16" height="16" fill="none" viewBox="0 0 16 16">
+                <rect x="3" y="1" width="10" height="14" rx="1.5" stroke="white" stroke-width="1.2"/>
+                <path d="M5 5h6M5 8h6M5 11h4" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+                <path d="M9.5 1v3.5H13" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="cta-pdf-text">
+              <div class="cta-pdf-label">競賽說明</div>
+              <div class="cta-pdf-sub">PDF · 點擊開啟</div>
+            </div>
+          </a>
+        </div>
+
+        <div class="cta-info">
+          附上 <span>3 分鐘說明影片</span>，讓評審看見你的成果
+        </div>
+
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-num">5 區塊</div>
+            <div class="stat-label">完整報名表</div>
           </div>
-          <div class="cta-pdf-text">
-            <div class="cta-pdf-label">競賽說明</div>
-            <div class="cta-pdf-sub">PDF · 點擊開啟</div>
+          <div class="stat">
+            <div class="stat-num">≤5 分鐘</div>
+            <div class="stat-label">說明影片</div>
           </div>
-        </a>
-      </div>
-      <div class="cta-info" style="margin-top:4px;">
-        附上 <span>3 分鐘說明影片</span>，讓評審看見你的成果
+          <div class="stat">
+            <div class="stat-num">開放報名</div>
+            <div class="stat-label">全院同仁均可</div>
+          </div>
+        </div>
       </div>
 
-      <div class="stats-row">
-        <div class="stat">
-          <div class="stat-num">5 區塊</div>
-          <div class="stat-label">完整報名表</div>
+      <!-- RIGHT -->
+      <div class="hero-right">
+        <div class="hero-poster">
+          <img id="hero-img" src="2025.jpg" alt="2026 AI 應用競賽海報">
         </div>
-        <div class="stat">
-          <div class="stat-num">≤3 分鐘</div>
-          <div class="stat-label">說明影片</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">開放報名</div>
-          <div class="stat-label">全院同仁均可</div>
+
+        <div class="img-badge">
+          <div class="img-badge-title">A+1 for One Health</div>
+          <div class="img-badge-main">AI 應用競賽</div>
+          <div class="img-badge-sub">立即報名、完成提交</div>
         </div>
       </div>
     </div>
 
-    <!-- poster as full-bleed background -->
+    <div class="deadline-banner">
+      <div class="deadline-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+          <path d="M8 5v3.5l2 1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        報名截止：<strong>敬請留意公告</strong>
+      </div>
+      <div class="deadline-dot"></div>
+      <div class="deadline-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+          <rect x="2" y="3" width="12" height="11" rx="1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+          <path d="M5 2v2M11 2v2M2 7h12" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        評審時程：<strong>第一階段書面 → 第二階段簡報</strong>
+      </div>
+      <div class="deadline-dot"></div>
+      <div class="deadline-item">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M8 2a4 4 0 100 8A4 4 0 008 2z" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/>
+          <path d="M4 14c0-1.1 1.8-2 4-2s4 .9 4 2" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        報名資格：<strong>全院同仁（個人或團隊均可）</strong>
+      </div>
+    </div>
   </div>
 
-  <!-- DEADLINE BANNER -->
-  <div class="deadline-banner">
-    <div class="deadline-item">
-      <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M8 5v3.5l2 1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/></svg>
-      報名截止：<strong>敬請留意公告</strong>
+  <!-- ═══════════════════════════════════════
+       FORM PAGE
+  ═══════════════════════════════════════════ -->
+  <div id="form-page">
+    <div class="form-topbar">
+      <button class="back-btn" onclick="backToLanding()">
+        <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        返回活動首頁
+      </button>
+      <div class="form-topbar-title">AI 應用實才徵集 ─ 報名申請表</div>
+      <div class="form-topbar-right">A+1 for One Health</div>
     </div>
-    <div class="deadline-dot"></div>
-    <div class="deadline-item">
-      <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="11" rx="1.5" stroke="rgba(255,255,255,0.6)" stroke-width="1.2"/><path d="M5 2v2M11 2v2M2 7h12" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/></svg>
-      評審時程：<strong>第一階段書面 → 第二階段簡報</strong>
+
+    <div class="form-progress">
+      <div class="prog-tab active" id="tab-A"><div class="prog-num">A</div>申請人資料</div>
+      <div class="prog-tab" id="tab-B"><div class="prog-num">B</div>案例基本資訊</div>
+      <div class="prog-tab" id="tab-C"><div class="prog-num">C</div>問題與解決方案</div>
+      <div class="prog-tab" id="tab-D"><div class="prog-num">D</div>實質效益</div>
+      <div class="prog-tab" id="tab-E"><div class="prog-num">E</div>資安與聲明</div>
     </div>
-    <div class="deadline-dot"></div>
-    <div class="deadline-item">
-      <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M8 2a4 4 0 100 8A4 4 0 008 2zM4 12c0-1.1 1.8-2 4-2s4 .9 4 2" stroke="rgba(255,255,255,0.6)" stroke-width="1.2" stroke-linecap="round"/></svg>
-      報名資格：<strong>全院同仁（個人或團隊均可）</strong>
+
+    <div class="form-body">
+      <!-- ── SECTION A ── -->
+      <div class="form-section visible" id="sec-A">
+        <div class="sec-header">
+          <div class="sec-letter">A</div>
+          <div>
+            <div class="sec-label">申請人基本資料</div>
+            <div class="sec-note">請填寫您的個人及單��資訊</div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="f">
+            <label>姓名 <span class="req">*</span></label>
+            <input type="text" id="name" placeholder="中文全名" required>
+          </div>
+          <div class="f">
+            <label>人事號 <span class="req">*</span></label>
+            <input type="text" id="employee_id" placeholder="員工人事號" required>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="f">
+            <label>所屬單位 / 部門 <span class="req">*</span></label>
+            <input type="text" id="department" placeholder="例：內科病房、急診部、資訊管理部…" required>
+          </div>
+          <div class="f">
+            <label>職稱 / 職類 <span class="req">*</span></label>
+            <input type="text" id="job_title" placeholder="例：護理師、住院醫師、行政人員…" required>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="f">
+            <label>公務機 / 分機</label>
+            <input type="tel" id="phone" placeholder="分機號碼">
+          </div>
+          <div class="f">
+            <label>電子郵件 <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="hospital@email.com" required>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <div></div>
+          <button class="btn-primary" onclick="goTo('B')">下一步：案例資訊 →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION B ── -->
+      <div class="form-section" id="sec-B">
+        <div class="sec-header">
+          <div class="sec-letter">B</div>
+          <div>
+            <div class="sec-label">案例基本資訊</div>
+            <div class="sec-note">描述您的 AI 應用案例概況</div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>照護流程方案名稱 <span class="req">*</span></label>
+            <input type="text" id="project_name"
+                   placeholder="請以 15 字以內簡潔命名，例：AI 輔助護理交班摘要自動生成"
+                   maxlength="15" oninput="updateCount(this,'cnt_proj',15)" required>
+            <div class="charcount" id="cnt_proj">0 / 15 字</div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>使用 AI 工具類型 <span class="req">*</span></label>
+            <div class="pills">
+              <label class="pill"><input type="radio" name="ai_tool" value="院內A+平台工具" required> 院內 A+ 平台工具</label>
+              <label class="pill"><input type="radio" name="ai_tool" value="外部AI工具"> 外部 AI 工具（ChatGPT / Claude / Copilot 等）</label>
+              <label class="pill"><input type="radio" name="ai_tool" value="自行開發工具"> 自行開發工具</label>
+              <label class="pill"><input type="radio" name="ai_tool" value="多工具整合"> 多工具整合</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>應用類別 <span class="req">*</span>（可複選）</label>
+            <div class="pills">
+              <label class="pill"><input type="checkbox" name="category" value="臨床照護相關" required> 臨床照護相關</label>
+              <label class="pill"><input type="checkbox" name="category" value="行政流程相關"> 行政流程相關</label>
+              <label class="pill"><input type="checkbox" name="category" value="資料與工作優化相關"> 資料與工作優化相關</label>
+              <label class="pill"><input type="checkbox" name="category" value="其他" id="cat_other"> 其他</label>
+            </div>
+          </div>
+        </div>
+        <div id="category_other_wrap" style="display:none;margin-top:-8px;margin-bottom:18px;">
+          <input type="text" id="category_other" placeholder="請說明其他應用類別">
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>目前使用頻率 <span class="req">*</span></label>
+            <div class="pills">
+              <label class="pill"><input type="radio" name="freq" value="每日使用" required> 每日使用</label>
+              <label class="pill"><input type="radio" name="freq" value="每週多次"> 每週多次</label>
+              <label class="pill"><input type="radio" name="freq" value="每週約1次"> 每週約 1 次</label>
+              <label class="pill"><input type="radio" name="freq" value="不定期使用"> 不定期使用</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo('A')">← 上一步</button>
+          <button class="btn-primary" onclick="goTo('C')">下一步：問題說明 →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION C ── -->
+      <div class="form-section" id="sec-C">
+        <div class="sec-header">
+          <div class="sec-letter">C</div>
+          <div>
+            <div class="sec-label">問題描述與 AI 解決方案說明</div>
+            <div class="sec-note">具體說明痛點與解決過程</div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>使用 AI 前的工作痛點 <span class="req">*</span></label>
+            <textarea id="pain_point" placeholder="請具體描述原本的困難與挑戰…" rows="4" required></textarea>
+          </div>
+        </div>
+        <div class="fg full">
+          <div class="f">
+            <label>AI 解決方式 <span class="req">*</span>（操作流程 / 使用步驟概要）</label>
+            <textarea id="ai_solution" placeholder="請說明您如何使用 AI 工具來解決問題…" rows="4" required></textarea>
+          </div>
+        </div>
+        <div class="fg full">
+          <div class="f">
+            <label>工作流程設計概述</label>
+            <textarea id="workflow" placeholder="概要說明即可，無需揭露完整內容…" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="f">
+            <label>是否已建立操作 SOP？</label>
+            <div class="pills">
+              <label class="pill"><input type="radio" name="sop" value="是已有書面文件"> 是，已有書面文件</label>
+              <label class="pill"><input type="radio" name="sop" value="是但尚未文件化"> 是，但尚未文件化</label>
+              <label class="pill"><input type="radio" name="sop" value="否"> 否</label>
+            </div>
+          </div>
+          <div class="f">
+            <label>是否與院內系統整合？</label>
+            <div class="pills" style="flex-direction:column;align-items:flex-start;">
+              <label class="pill"><input type="radio" name="integration" value="是已整合HIS"> 是，已整合 HIS / A+ 平台</label>
+              <label class="pill"><input type="radio" name="integration" value="部分整合"> 部分整合</label>
+              <label class="pill"><input type="radio" name="integration" value="否獨立使用"> 否，獨立使用</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo('B')">← 上一步</button>
+          <button class="btn-primary" onclick="goTo('D')">下一步：實質效益 →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION D ── -->
+      <div class="form-section" id="sec-D">
+        <div class="sec-header">
+          <div class="sec-letter">D</div>
+          <div>
+            <div class="sec-label">實質效益</div>
+            <div class="sec-note">量化與質化的成果說明</div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>量化效益 <span class="req">*</span></label>
+            <textarea id="quant_benefit" placeholder="請提供數字，例：每日節省 X 分鐘、文件處理份數提升 X%…" rows="3" required></textarea>
+          </div>
+        </div>
+        <div class="fg full">
+          <div class="f">
+            <label>質化效益</label>
+            <textarea id="qual_benefit" placeholder="不易量化的改善說明，例：同仁工作壓力減輕、溝通更順暢…" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="f">
+            <label>主要受益對象</label>
+            <div class="pills" style="flex-direction:column;align-items:flex-start;">
+              <label class="pill"><input type="checkbox" name="beneficiary" value="個人工作效率"> 個人工作效率</label>
+              <label class="pill"><input type="checkbox" name="beneficiary" value="團隊協作"> 團隊協作</label>
+              <label class="pill"><input type="checkbox" name="beneficiary" value="病人照護品質"> 病人照護品質</label>
+              <label class="pill"><input type="checkbox" name="beneficiary" value="行政效率"> 行政效率</label>
+              <label class="pill"><input type="checkbox" name="beneficiary" value="其他"> 其他</label>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <label style="display:block;margin-bottom:8px;">說明影片連結 <span class="req">*</span></label>
+          <div class="notice">
+            <strong>📹 影片上傳說明</strong><br>
+            請確保連結可供評審委員開啟檢視，且<strong>不得出現真實病人個人資料</strong>。<br>
+            請先將影片（5 分鐘以內）上傳至 <strong>OneDrive 或 Google Drive</strong>，再將分享連結貼於下方。<br>
+            影片應清楚呈現：① 工作情境　② AI 操作流程　③ 實際效益。
+          </div>
+          <div class="f" style="margin-top:8px;">
+            <input type="url" id="video_url" placeholder="https://..." required>
+            <div class="hint">範例：https://drive.google.com/... 或 https://youtu.be/...</div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo('C')">← 上一步</button>
+          <button class="btn-primary" onclick="goTo('E')">下一步：資安聲明 →</button>
+        </div>
+      </div>
+
+      <!-- ── SECTION E ── -->
+      <div class="form-section" id="sec-E">
+        <div class="sec-header">
+          <div class="sec-letter">E</div>
+          <div>
+            <div class="sec-label">資安與個人資料保護聲明</div>
+            <div class="sec-note">確認資安合規及推廣意願</div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>案例是否含有病人資料？ <span class="req">*</span></label>
+            <div class="pills">
+              <label class="pill"><input type="radio" name="patient_data" value="否完全不含個人資料" required> 否，完全不含個人資料</label>
+              <label class="pill"><input type="radio" name="patient_data" value="有已完成去識別化"> 有，已完成去識別化處理</label>
+              <label class="pill"><input type="radio" name="patient_data" value="有申請影片中已移除"> 有，申請 / 影片中已移除，不會出現</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
+            <label>資料流說明 <span class="req">*</span>（請說明輸入 AI 的是什麼類型資料）</label>
+            <textarea id="data_flow" placeholder="例：輸入的是去識別化的護理記錄文字，不含姓名及病歷號…" rows="3" required></textarea>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="f">
+            <label>是否同意案例對外分享？</label>
+            <div class="pills" style="flex-direction:column;align-items:flex-start;">
+              <label class="pill"><input type="radio" name="share_consent" value="同意去識別化後對外分享"> 同意去識別化後對外分享（計入加分）</label>
+              <label class="pill"><input type="radio" name="share_consent" value="僅同意院內分享"> 僅同意院內分享</label>
+              <label class="pill"><input type="radio" name="share_consent" value="不同意對外分享"> 不同意對外分享</label>
+            </div>
+          </div>
+          <div class="f">
+            <label>是否可推廣至其他單位？</label>
+            <div class="pills" style="flex-direction:column;align-items:flex-start;">
+              <label class="pill"><input type="radio" name="scalability" value="可以幾乎不需修改"> 可以，幾乎不需修改</label>
+              <label class="pill"><input type="radio" name="scalability" value="可以需少量調整"> 可以，需少量調整</label>
+              <label class="pill"><input type="radio" name="scalability" value="目前僅適用本單位"> 目前僅適用本單位</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="fg">
+          <div class="f">
+            <label>是否已有他人使用此做法？</label>
+            <div class="pills" style="flex-direction:column;align-items:flex-start;">
+              <label class="pill"><input type="radio" name="adoption" value="是同單位其他同仁也在使用"> 是，同單位其他同仁也在使用</label>
+              <label class="pill"><input type="radio" name="adoption" value="是已推廣至其他單位"> 是，已推廣至其他單位</label>
+              <label class="pill"><input type="radio" name="adoption" value="否"> 否</label>
+            </div>
+          </div>
+          <div class="f">
+            <label>是否願意在院內分享會簡報說明？</label>
+            <div class="pills" style="flex-direction:column;align-items:flex-start;">
+              <label class="pill"><input type="radio" name="presentation_willing" value="是若入選願意進行5分鐘報告"> 是，若入選願意進行第二階段 5 分鐘報告</label>
+              <label class="pill"><input type="radio" name="presentation_willing" value="否僅參加第一階段評選"> 否（僅參加第一階段評選）</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="decl">
+          <div class="decl-title">報名聲明事項</div>
+          <ul>
+            <li>本申請表所填寫之資訊均屬實，如有虛偽不實，願負相關責任。</li>
+            <li>同意主辦單位依計畫需要使用相關資料，並遵守個人資料保護法相關規定。</li>
+            <li>影片及資料不得含有真實病人個人識別資料。</li>
+            <li>若獲選參加第二階段，同意配合主辦單位安排進行簡報。</li>
+          </ul>
+          <div class="agree-row">
+            <input type="checkbox" id="agree" required>
+            <label for="agree">本人已詳閱並同意上述聲明事項，確認所有填寫內容均屬實。</label>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-secondary" onclick="goTo('D')">← 上一步</button>
+          <button class="btn-primary btn-submit" onclick="submitForm()">
+            <svg width="16" height="16" fill="none" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            送出報名
+          </button>
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success-wrap" id="success">
+        <div class="success-icon">
+          <svg width="36" height="36" fill="none" viewBox="0 0 36 36" aria-hidden="true">
+            <path d="M6 18l8 8 16-16" stroke="#2a7a3a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="success-title">報名資料已送出！</div>
+        <p class="success-sub">
+          感謝您參與 AI 應用競賽。<br>
+          我們已收到您的報名資料，評審委員將於審閱後與您聯繫。<br><br>
+          <span style="font-size:13px;color:#aaa;">如有任何問題，請聯繫深耕辦公室｜吳曉琪53710。</span>
+        </p>
+      </div>
     </div>
   </div>
 
-</div>
+  <script>
+    // 保留 2025.jpg
+    (function(){
+      var img = document.getElementById('hero-img');
+      if (img) img.src = '2025.jpg';
+    })();
 
-<!-- ═══════════════════════════════════════
-     FORM PAGE
-══════════════════════════════════════════ -->
-<div id="form-page">
+    var currentSection = 'A';
+    var sections = ['A','B','C','D','E'];
 
-  <div class="form-topbar">
-    <button class="back-btn" onclick="backToLanding()">
-      <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      返回活動首頁
-    </button>
-    <div class="form-topbar-title">AI 應用實才徵集 ─ 報名申請表</div>
-    <div class="form-topbar-right">A+1 for One Health</div>
-  </div>
+    function showForm(){
+      document.getElementById('landing').style.display='none';
+      document.getElementById('form-page').classList.add('visible');
+      window.scrollTo(0,0);
+    }
+    function backToLanding(){
+      document.getElementById('form-page').classList.remove('visible');
+      document.getElementById('landing').style.display='flex';
+      document.getElementById('landing').style.flexDirection='column';
+      window.scrollTo(0,0);
+    }
 
-  <div class="form-progress">
-    <div class="prog-tab active" id="tab-A"><div class="prog-num">A</div>申請人資料</div>
-    <div class="prog-tab" id="tab-B"><div class="prog-num">B</div>案例基本資訊</div>
-    <div class="prog-tab" id="tab-C"><div class="prog-num">C</div>問題與解決方案</div>
-    <div class="prog-tab" id="tab-D"><div class="prog-num">D</div>實質效益</div>
-    <div class="prog-tab" id="tab-E"><div class="prog-num">E</div>資安與聲明</div>
-  </div>
+    function setTab(sec){
+      sections.forEach(function(s){
+        var tab=document.getElementById('tab-'+s);
+        if (!tab) return;
+        tab.classList.remove('active');
+      });
+      var active=document.getElementById('tab-'+sec);
+      if (active) active.classList.add('active');
+    }
 
-  <div class="form-body">
+    function goTo(sec){
+      // basic required check for current section
+      if (!validateSection(currentSection)) return;
 
-    <!-- ── SECTION A ── -->
-    <div class="form-section visible" id="sec-A">
-      <div class="sec-header">
-        <div class="sec-letter">A</div>
-        <div>
-          <div class="sec-label">申請人基本資料</div>
-          <div class="sec-note">請填寫您的個人及單位資訊</div>
-        </div>
-      </div>
+      document.getElementById('sec-'+currentSection).classList.remove('visible');
+      var tabCur=document.getElementById('tab-'+currentSection);
+      if (tabCur){
+        tabCur.classList.remove('active');
+        tabCur.classList.add('done');
+      }
 
-      <div class="fg">
-        <div class="f">
-          <label>姓名 <span class="req">*</span></label>
-          <input type="text" id="name" placeholder="中文全名" required>
-        </div>
-        <div class="f">
-          <label>人事號 <span class="req">*</span></label>
-          <input type="text" id="employee_id" placeholder="員工人事號" required>
-        </div>
-      </div>
-      <div class="fg">
-        <div class="f">
-          <label>所屬單位 / 部門 <span class="req">*</span></label>
-          <input type="text" id="department" placeholder="例：內科病房、急診部、資訊管理部…" required>
-        </div>
-        <div class="f">
-          <label>職稱 / 職類 <span class="req">*</span></label>
-          <input type="text" id="job_title" placeholder="例：護理師、住院醫師、行政人員…" required>
-        </div>
-      </div>
-      <div class="fg">
-        <div class="f">
-          <label>公務機 / 分機</label>
-          <input type="tel" id="phone" placeholder="分機號碼">
-        </div>
-        <div class="f">
-          <label>電子郵件 <span class="req">*</span></label>
-          <input type="email" id="email" placeholder="hospital@email.com" required>
-        </div>
-      </div>
+      document.getElementById('sec-'+sec).classList.add('visible');
+      setTab(sec);
+      currentSection = sec;
+      window.scrollTo(0,0);
+    }
 
-      <div class="btn-row">
-        <div></div>
-        <button class="btn-primary" onclick="goTo('B')">下一步：案例資訊 →</button>
-      </div>
-    </div>
+    function updateCount(el, counterId, max){
+      var v = (el.value || '').trim();
+      var cnt = v.length;
+      var box = document.getElementById(counterId);
+      if (!box) return;
+      box.textContent = cnt + ' / ' + max + ' 字';
+      box.classList.toggle('over', cnt > max);
+    }
 
-    <!-- ── SECTION B ── -->
-    <div class="form-section" id="sec-B">
-      <div class="sec-header">
-        <div class="sec-letter">B</div>
-        <div>
-          <div class="sec-label">案例基本資訊</div>
-          <div class="sec-note">描述您的 AI 應用案例概況</div>
-        </div>
-      </div>
+    // B: 類別「其他」顯示輸入框
+    (function(){
+      var other = document.getElementById('cat_other');
+      var wrap = document.getElementById('category_other_wrap');
+      if (!other || !wrap) return;
 
-      <div class="fg full">
-        <div class="f">
-          <label>照護流程方案名稱 <span class="req">*</span></label>
-          <input type="text" id="project_name" placeholder="請以 15 字以內簡潔命名，例：AI 輔助護理交班摘要自動生成" maxlength="15" oninput="updateCount(this,'cnt_proj',15)">
-          <div class="charcount" id="cnt_proj">0 / 15 字</div>
-        </div>
-      </div>
+      function sync(){
+        wrap.style.display = other.checked ? 'block' : 'none';
+      }
+      other.addEventListener('change', sync);
+      sync();
+    })();
 
-      <div class="fg full">
-        <div class="f">
-          <label>使用 AI 工具類型 <span class="req">*</span></label>
-          <div class="pills">
-            <label class="pill"><input type="radio" name="ai_tool" value="院內A+平台工具"> 院內 A+ 平台工具</label>
-            <label class="pill"><input type="radio" name="ai_tool" value="外部AI工具"> 外部 AI 工具（ChatGPT / Claude / Copilot 等）</label>
-            <label class="pill"><input type="radio" name="ai_tool" value="自行開發工具"> 自行開發工具</label>
-            <label class="pill"><input type="radio" name="ai_tool" value="多工具整合"> 多工具整合</label>
-          </div>
-        </div>
-      </div>
+    function validateSection(sec){
+      var root = document.getElementById('sec-'+sec);
+      if (!root) return true;
 
-      <div class="fg full">
-        <div class="f">
-          <label>應用類別 <span class="req">*</span>（可複選）</label>
-          <div class="pills">
-            <label class="pill"><input type="checkbox" name="category" value="臨床照護相關"> 臨床照護相關</label>
-            <label class="pill"><input type="checkbox" name="category" value="行政流程相關"> 行政流程相關</label>
-            <label class="pill"><input type="checkbox" name="category" value="資料與工作優化相關"> 資料與工作優化相關</label>
-            <label class="pill"><input type="checkbox" name="category" value="其他"> 其他</label>
-          </div>
-        </div>
-      </div>
-      <div id="category_other_wrap" style="display:none;margin-top:-8px;margin-bottom:18px;">
-        <input type="text" id="category_other" placeholder="請說明其他應用類別">
-      </div>
+      // collect required inputs/textarea/select
+      var required = root.querySelectorAll('[required]');
+      for (var i=0;i<required.length;i++){
+        var el = required[i];
 
-      <div class="fg full">
-        <div class="f">
-          <label>目前使用頻率 <span class="req">*</span></label>
-          <div class="pills">
-            <label class="pill"><input type="radio" name="freq" value="每日使用"> 每日使用</label>
-            <label class="pill"><input type="radio" name="freq" value="每週多次"> 每週多次</label>
-            <label class="pill"><input type="radio" name="freq" value="每週約1次"> 每週約 1 次</label>
-            <label class="pill"><input type="radio" name="freq" value="不定期使用"> 不定期使用</label>
-          </div>
-        </div>
-      </div>
+        // radio group
+        if (el.type === 'radio'){
+          var name = el.name;
+          if (!name) continue;
+          var checked = root.querySelector('input[type="radio"][name="'+name+'"]:checked');
+          if (!checked){
+            alert('請完成必填項目。');
+            return false;
+          }
+          continue;
+        }
 
-      <div class="btn-row">
-        <button class="btn-secondary" onclick="goTo('A')">← 上一步</button>
-        <button class="btn-primary" onclick="goTo('C')">下一步：問題說明 →</button>
-      </div>
-    </div>
+        // checkbox group: allow at least one checked if there are multiple required checkboxes with same name
+        if (el.type === 'checkbox' && el.name){
+          var group = root.querySelectorAll('input[type="checkbox"][name="'+el.name+'"]');
+          var anyChecked = false;
+          for (var j=0;j<group.length;j++){
+            if (group[j].checked){ anyChecked = true; break; }
+          }
+          if (!anyChecked){
+            alert('請完成必填項目。');
+            return false;
+          }
+          continue;
+        }
 
-    <!-- ── SECTION C ── -->
-    <div class="form-section" id="sec-C">
-      <div class="sec-header">
-        <div class="sec-letter">C</div>
-        <div>
-          <div class="sec-label">問題描述與 AI 解決方案說明</div>
-          <div class="sec-note">具體說明痛點與解決過程</div>
-        </div>
-      </div>
+        if (!el.value){
+          el.focus();
+          alert('請完成必填項目。');
+          return false;
+        }
+      }
 
-      <div class="fg full">
-        <div class="f">
-          <label>使用 AI 前的工作痛點 <span class="req">*</span></label>
-          <textarea id="pain_point" placeholder="請具體描述原本的困難與挑戰…" rows="4"></textarea>
-        </div>
-      </div>
-      <div class="fg full">
-        <div class="f">
-          <label>AI 解決方式 <span class="req">*</span>（操作流程 / 使用步驟概要）</label>
-          <textarea id="ai_solution" placeholder="請說明您如何使用 AI 工具來解決問題…" rows="4"></textarea>
-        </div>
-      </div>
-      <div class="fg full">
-        <div class="f">
-          <label>工作流程設計概述</label>
-          <textarea id="workflow" placeholder="概要說明即可，無需揭露完整內容…" rows="3"></textarea>
-        </div>
-      </div>
+      // extra: B 的「其他類別」如果勾選必填
+      if (sec === 'B'){
+        var other = document.getElementById('cat_other');
+        var otherText = document.getElementById('category_other');
+        if (other && other.checked && otherText && !otherText.value.trim()){
+          otherText.focus();
+          alert('請填寫「其他」應用類別說明。');
+          return false;
+        }
+      }
 
-      <div class="fg">
-        <div class="f">
-          <label>是否已建立操作 SOP？</label>
-          <div class="pills">
-            <label class="pill"><input type="radio" name="sop" value="是已有書面文件"> 是，已有書面文件</label>
-            <label class="pill"><input type="radio" name="sop" value="是但尚未文件化"> 是，但尚未文件化</label>
-            <label class="pill"><input type="radio" name="sop" value="否"> 否</label>
-          </div>
-        </div>
-        <div class="f">
-          <label>是否與院內系統整合？</label>
-          <div class="pills" style="flex-direction:column;align-items:flex-start;">
-            <label class="pill"><input type="radio" name="integration" value="是已整合HIS"> 是，已整合 HIS / A+ 平台</label>
-            <label class="pill"><input type="radio" name="integration" value="部分整合"> 部分整合</label>
-            <label class="pill"><input type="radio" name="integration" value="否獨立使用"> 否，獨立使用</label>
-          </div>
-        </div>
-      </div>
+      return true;
+    }
 
-      <div class="btn-row">
-        <button class="btn-secondary" onclick="goTo('B')">← 上一步</button>
-        <button class="btn-primary" onclick="goTo('D')">下一步：實質效益 →</button>
-      </div>
-    </div>
+    function submitForm(){
+      // validate all sections quickly
+      for (var i=0;i<sections.length;i++){
+        if (!validateSection(sections[i])) return;
+      }
 
-    <!-- ── SECTION D ── -->
-    <div class="form-section" id="sec-D">
-      <div class="sec-header">
-        <div class="sec-letter">D</div>
-        <div>
-          <div class="sec-label">實質效益</div>
-          <div class="sec-note">量化與質化的成果說明</div>
-        </div>
-      </div>
+      // success view
+      sections.forEach(function(s){
+        var node=document.getElementById('sec-'+s);
+        if (node) node.classList.remove('visible');
+      });
+      var prog = document.querySelector('.form-progress');
+      if (prog) prog.style.display = 'none';
 
-      <div class="fg full">
-        <div class="f">
-          <label>量化效益 <span class="req">*</span></label>
-          <textarea id="quant_benefit" placeholder="請提供數字，例：每日節省 X 分鐘、文件處理份數提升 X%…" rows="3"></textarea>
-        </div>
-      </div>
-      <div class="fg full">
-        <div class="f">
-          <label>質化效益</label>
-          <textarea id="qual_benefit" placeholder="不易量化的改善說明，例：同仁工作壓力減輕、溝通更順暢…" rows="3"></textarea>
-        </div>
-      </div>
-
-      <div class="fg">
-
-        <div class="f">
-          <label>主要受益對象</label>
-          <div class="pills" style="flex-direction:column;align-items:flex-start;">
-            <label class="pill"><input type="checkbox" name="beneficiary" value="個人工作效率"> 個人工作效率</label>
-            <label class="pill"><input type="checkbox" name="beneficiary" value="團隊協作"> 團隊協作</label>
-            <label class="pill"><input type="checkbox" name="beneficiary" value="病人照護品質"> 病人照護品質</label>
-            <label class="pill"><input type="checkbox" name="beneficiary" value="行政效率"> 行政效率</label>
-            <label class="pill"><input type="checkbox" name="beneficiary" value="其他"> 其他</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- VIDEO LINK -->
-      <div style="margin-top:12px;">
-        <label style="display:block;margin-bottom:8px;">說明影片連結 <span class="req">*</span></label>
-        <div class="notice">
-          <strong>📹 影片上傳說明</strong><br>
-          請確保連結可供評審委員開啟檢視，且<strong>不得出現真實病人個人資料</strong>。<br>
-          請先將影片（5 分鐘以內）上傳至 <strong>OneDrive 或 Google Drive</strong>，再將分享連結貼於下方。<br>
-          影片應清楚呈現：① 工作情境　② AI 操作流程　③ 實際效益。
-        </div>
-        <div class="f" style="margin-top:8px;">
-          <input type="url" id="video_url" placeholder="https://..." style="width:100%;">
-          <div class="hint">範例：https://drive.google.com/... 或 https://youtu.be/...</div>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-secondary" onclick="goTo('C')">← 上一步</button>
-        <button class="btn-primary" onclick="goTo('E')">下一步：資安聲明 →</button>
-      </div>
-    </div>
-
-    <!-- ── SECTION E ── -->
-    <div class="form-section" id="sec-E">
-      <div class="sec-header">
-        <div class="sec-letter">E</div>
-        <div>
-          <div class="sec-label">資安與個人資料保護聲明</div>
-          <div class="sec-note">確認資安合規及推廣意願</div>
-        </div>
-      </div>
-
-      <div class="fg full">
-        <div class="f">
-          <label>案例是否含有病人資料？ <span class="req">*</span></label>
-          <div class="pills">
-            <label class="pill"><input type="radio" name="patient_data" value="否完全不含個人資料"> 否，完全不含個人資料</label>
-            <label class="pill"><input type="radio" name="patient_data" value="有已完成去識別化"> 有，已完成去識別化處理</label>
-            <label class="pill"><input type="radio" name="patient_data" value="有申請影片中已移除"> 有，申請 / 影片中已移除，不會出現</label>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="fg full">
-        <div class="f">
-          <label>資料流說明 <span class="req">*</span>（請說明輸入 AI 的是什麼類型資料）</label>
-          <textarea id="data_flow" placeholder="例：輸入的是去識別化的護理記錄文字，不含姓名及病歷號…" rows="3"></textarea>
-        </div>
-      </div>
-
-      <div class="fg">
-        <div class="f">
-          <label>是否同意案例對外分享？</label>
-          <div class="pills" style="flex-direction:column;align-items:flex-start;">
-            <label class="pill"><input type="radio" name="share_consent" value="同意去識別化後對外分享"> 同意去識別化後對外分享（計入加分）</label>
-            <label class="pill"><input type="radio" name="share_consent" value="僅同意院內分享"> 僅同意院內分享</label>
-            <label class="pill"><input type="radio" name="share_consent" value="不同意對外分享"> 不同意對外分享</label>
-          </div>
-        </div>
-        <div class="f">
-          <label>是否可推廣至其他單位？</label>
-          <div class="pills" style="flex-direction:column;align-items:flex-start;">
-            <label class="pill"><input type="radio" name="scalability" value="可以幾乎不需修改"> 可以，幾乎不需修改</label>
-            <label class="pill"><input type="radio" name="scalability" value="可以需少量調整"> 可以，需少量調整</label>
-            <label class="pill"><input type="radio" name="scalability" value="目前僅適用本單位"> 目前僅適用本單位</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="fg">
-        <div class="f">
-          <label>是否已有他人使用此做法？</label>
-          <div class="pills" style="flex-direction:column;align-items:flex-start;">
-            <label class="pill"><input type="radio" name="adoption" value="是同單位其他同仁也在使用"> 是，同單位其他同仁也在使用</label>
-            <label class="pill"><input type="radio" name="adoption" value="是已推廣至其他單位"> 是，已推廣至其他單位</label>
-            <label class="pill"><input type="radio" name="adoption" value="否"> 否</label>
-          </div>
-        </div>
-        <div class="f">
-          <label>是否願意在院內分享會簡報說明？</label>
-          <div class="pills" style="flex-direction:column;align-items:flex-start;">
-            <label class="pill"><input type="radio" name="presentation_willing" value="是若入選願意進行5分鐘報告"> 是，若入選願意進行第二階段 5 分鐘報告</label>
-            <label class="pill"><input type="radio" name="presentation_willing" value="否僅參加第一階段評選"> 否（僅參加第一階段評選）</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- DECLARATION -->
-      <div class="decl">
-        <div class="decl-title">報名聲明事項</div>
-        <ul>
-          <li>本申請表所填寫之資訊均屬實，如有虛偽不實，願負相關責任。</li>
-          <li>同意主辦單位依計畫需要使用相關資料，並遵守個人資料保護法相關規定。</li>
-          <li>影片及資料不得含有真實病人個人識別資料。</li>
-          <li>若獲選參加第二階段，同意配合主辦單位安排進行簡報。</li>
-        </ul>
-        <div class="agree-row">
-          <input type="checkbox" id="agree" required>
-          <label for="agree">本人已詳閱並同意上述聲明事項，確認所有填寫內容均屬實。</label>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-secondary" onclick="goTo('D')">← 上一步</button>
-        <button class="btn-primary btn-submit" onclick="submitForm()">
-          <svg width="16" height="16" fill="none" viewBox="0 0 16 16"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          送出報名
-        </button>
-      </div>
-    </div>
-
-    <!-- SUCCESS -->
-    <div class="success-wrap" id="success">
-      <div class="success-icon">
-        <svg width="36" height="36" fill="none" viewBox="0 0 36 36"><path d="M6 18l8 8 16-16" stroke="#2a7a3a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="success-title">報名資料已送出！</div>
-      <p class="success-sub">
-        感謝您參與 AI 應用實才徵集計畫。<br>
-        我們已收到您的報名資料，評審委員將於審閱後與您聯繫。<br><br>
-        <span style="font-size:13px;color:#aaa;">如有任何問題，請聯繫計畫主辦單位。</span>
-      </p>
-    </div>
-
-  </div><!-- /form-body -->
-</div><!-- /form-page -->
-
-<script>
-// ── Embed hero image ──
-(function(){
-  var img=document.getElementById('hero-img');
-  img.src='2025.jpg';
-})();
-
-// ── Navigation ──
-var currentSection='A';
-var sections=['A','B','C','D','E'];
-
-function showForm(){
-  document.getElementById('landing').style.display='none';
-  document.getElementById('form-page').classList.add('visible');
-  window.scrollTo(0,0);
-}
-function backToLanding(){
-  document.getElementById('form-page').classList.remove('visible');
-  document.getElementById('landing').style.display='flex';
-  document.getElementById('landing').style.flexDirection='column';
-  window.scrollTo(0,0);
-}
-
-function goTo(sec){
-  // hide current
-  document.getElementById('sec-'+currentSection).classList.remove('visible');
-  document.getElementById('tab-'+currentSection).classList.remove('active');
-  document.getElementById('tab-'+currentSection).classList.add('done');
-  // show new
-  document.getElementById('sec-'+sec).classList.add('visible');
-  document.getElementById('tab-'+sec).classList.remove('done');
-  document.getElementById('tab-'+sec).classList.add('active');
-  currentSection=sec;
-  // scroll to top of form body
-  document.querySelector('.form-body').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-// ── Char count ──
-function updateCount(el,counterId,max){
-  var len=el.value.length;
-  var el2=document.getElementById(counterId);
-  el2.textContent=len+' / '+max+' 字';
-  el2.className='charcount'+(len>max?' over':'');
-}
-
-// ── Category "other" toggle ──
-document.querySelectorAll('input[name="category"]').forEach(function(cb){
-  cb.addEventListener('change',function(){
-    var anyOther=[...document.querySelectorAll('input[name="category"]:checked')].some(function(c){return c.value==='其他';});
-    document.getElementById('category_other_wrap').style.display=anyOther?'block':'none';
-  });
-});
-
-
-
-
-// ── Submit ──
-function submitForm(){
-  if(!document.getElementById('agree').checked){
-    alert('請勾選同意聲明事項後再送出。');
-    return;
-  }
-
-  // Collect form data
-  var data={
-    姓名: v('name'),
-    人事號: v('employee_id'),
-    所屬單位: v('department'),
-    職稱: v('job_title'),
-    公務機分機: v('phone'),
-    電子郵件: v('email'),
-    照護流程方案名稱: v('project_name'),
-    AI工具類型: radio('ai_tool'),
-    應用類別: checkboxes('category').join('、'),
-    應用類別其他: v('category_other'),
-    使用頻率: radio('freq'),
-    工作痛點: v('pain_point'),
-    AI解決方式: v('ai_solution'),
-    工作流程設計: v('workflow'),
-    是否有SOP: radio('sop'),
-    系統整合: radio('integration'),
-    量化效益: v('quant_benefit'),
-    質化效益: v('qual_benefit'),
-    佐證資料: radio('evidence'),
-    受益對象: checkboxes('beneficiary').join('、'),
-    病人資料: radio('patient_data'),
-    IT政策符合: radio('it_policy'),
-    IT政策備註: v('it_policy_note'),
-    資料流說明: v('data_flow'),
-    分享同意: radio('share_consent'),
-    可推廣性: radio('scalability'),
-    他人採用: radio('adoption'),
-    願意簡報: radio('presentation_willing'),
-    報名時間: new Date().toLocaleString('zh-TW'),
-    影片連結: v('video_url')
-  };
-
-  // TODO: Replace with your Power Automate HTTP trigger URL
-  var POWER_AUTOMATE_URL = 'YOUR_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE';
-
-  // Show loading state
-  var btn=document.querySelector('.btn-submit');
-  btn.textContent='送出中…';
-  btn.disabled=true;
-
-  if(POWER_AUTOMATE_URL==='YOUR_POWER_AUTOMATE_HTTP_TRIGGER_URL_HERE'){
-    // Demo mode: show success without actually sending
-    setTimeout(function(){
-      document.getElementById('sec-E').style.display='none';
       document.getElementById('success').classList.add('visible');
       window.scrollTo(0,0);
-    },1000);
-    return;
-  }
 
-  // Build FormData (for file + JSON)
-  data['影片連結'] = v('video_url');
-
-  fetch(POWER_AUTOMATE_URL,{method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(data)})
-    .then(function(r){
-      if(!r.ok) throw new Error('HTTP '+r.status);
-      document.getElementById('sec-E').style.display='none';
-      document.getElementById('success').classList.add('visible');
-      window.scrollTo(0,0);
-    })
-    .catch(function(err){
-      alert('送出失敗，請稍後再試或聯絡管理員。\n錯誤：'+err.message);
-      btn.textContent='送出報名';
-      btn.disabled=false;
-    });
-}
-
-function v(id){return(document.getElementById(id)||{}).value||'';}
-function radio(name){var r=document.querySelector('input[name="'+name+'"]:checked');return r?r.value:'';}
-function checkboxes(name){return [...document.querySelectorAll('input[name="'+name+'"]:checked')].map(function(c){return c.value;});}
-</script>
+      // TODO: 你要串後端（Google Form / Apps Script / API）可在此送出資料
+    }
+  </script>
 </body>
 </html>
