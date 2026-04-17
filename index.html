@@ -815,6 +815,20 @@
 
         <div class="fg full">
           <div class="f">
+            <label>使用 AI 應用模式類型 <span class="req">*</span>（可複選）</label>
+            <div class="pills">
+              <label class="pill"><input type="checkbox" name="ai_mode" value="臨床決策支援整合" required> 臨床決策支援整合</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="多模態AI分析應用"> 多模態 AI 分析應用</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="在地化醫療AI模型"> 在地化醫療 AI 模型</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="醫療資料安全與區塊鏈"> 醫療資料安全與區塊鏈</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="生成式AI應用（教學）"> 生成式 AI 應用（教學）</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="AI Agent流程優化"> AI Agent 流程優化</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="fg full">
+          <div class="f">
             <label>使用 AI 工具類型 <span class="req">*</span></label>
             <div class="pills">
               <label class="pill"><input type="radio" name="ai_tool" value="院內A+平台工具" required> 院內 A+ 平台工具</label>
@@ -1060,7 +1074,7 @@
 
   <script>
     // Google Apps Script Web App（最新部署 URL）
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxwvfLic-TUduOsNj_zqflhRGnansqh-r0Yx6LZF2g8NN6s9fJfU8MzCUNN8z4PdvfkvQ/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyiCSOLNsFNvlO39Qv7qHq7swA0r9N2WHBn3db_6XCl01gnrGU3IOmTw6c6_YIGT_Ii-w/exec";
 
     // 保留 2025.jpg
     (function(){
@@ -1210,6 +1224,7 @@ async function submitForm(){
     ai_tool: getRadioValue('ai_tool'),
     category: getCheckedValues('input[type="checkbox"][name="category"]').join(','),
     category_other: (document.getElementById('category_other') ? document.getElementById('category_other').value : '').trim(),
+    ai_mode: getCheckedValues('input[type="checkbox"][name="ai_mode"]').join(','),
     freq: getRadioValue('freq'),
 
     pain_point: document.getElementById('pain_point').value.trim(),
