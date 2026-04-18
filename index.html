@@ -829,12 +829,12 @@
 
         <div class="fg full">
           <div class="f">
-            <label>使用 AI 工具類型 <span class="req">*</span></label>
+            <label>使用 AI 工具類型 <span class="req">*</span>（可複選）</label>
             <div class="pills">
-              <label class="pill"><input type="radio" name="ai_tool" value="院內A+平台工具" required> 院內 A+ 平台工具</label>
-              <label class="pill"><input type="radio" name="ai_tool" value="外部AI工具"> 外部 AI 工具（ChatGPT / Claude / Copilot 等）</label>
-              <label class="pill"><input type="radio" name="ai_tool" value="自行開發工具"> 自行開發工具</label>
-              <label class="pill"><input type="radio" name="ai_tool" value="多工具整合"> 多工具整合</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="院內A+平台工具" required> 院內 A+ 平台工具</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="外部AI工具"> 外部 AI 工具（ChatGPT / Claude / Copilot 等）</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="自行開發工具"> 自行開發工具</label>
+              <label class="pill"><input type="checkbox" name="ai_mode" value="多工具整合"> 多工具整合</label>
             </div>
           </div>
         </div>
@@ -902,14 +902,6 @@
         </div>
 
         <div class="fg">
-          <div class="f">
-            <label>是否已建立操作 SOP？</label>
-            <div class="pills">
-              <label class="pill"><input type="radio" name="sop" value="是已有書面文件"> 是，已有書面文件</label>
-              <label class="pill"><input type="radio" name="sop" value="是但尚未文件化"> 是，但尚未文件化</label>
-              <label class="pill"><input type="radio" name="sop" value="否"> 否</label>
-            </div>
-          </div>
           <div class="f">
             <label>是否與院內系統整合？</label>
             <div class="pills" style="flex-direction:column;align-items:flex-start;">
